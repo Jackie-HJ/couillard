@@ -10,10 +10,12 @@ The work that needs to be done on this project is kept track of by [the issues o
 
 The 7 arrays do not all use the same inverters, so the data collected is stored in different places. The challange will be bringing all the data into one place.
 
-Backend: Python script cron job deployed to Render
+Backend: Python script cron job deployed to [Render](https://render.com/)
 
-Database: Firebase Firestore, same schema as Helios project
+Database: Firebase Firestore, same schema as [Helios Firestore](https://console.firebase.google.com/project/helios-9d435/firestore)
 
 Auth (if needed): Firebase Auth
 
-Frontend: React + GitHub pages / Firebase Hosting
+Frontend: React (reuese components from [Helios](https://github.com/DSSD-Madison/Helios) when possible) + Hosting TBD
+
+[Link to Firebase console for this project](https://console.firebase.google.com/project/couillard-b61b8/overview)
