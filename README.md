@@ -9,3 +9,11 @@ The work that needs to be done on this project is kept track of by [the issues o
 ## Problem and System Design
 
 The 7 arrays do not all use the same inverters, so the data collected is stored in different places. The challange will be bringing all the data into one place.
+
+Backend: Python script cron job deployed to Render
+
+Database: Firebase Firestore, same schema as Helios project
+
+Auth (if needed): Firebase Auth
+
+Frontend: React + GitHub pages / Firebase Hosting
