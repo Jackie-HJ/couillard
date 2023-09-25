@@ -4,7 +4,7 @@ This project will visualize solar output data from 7 solar arrays in Deerfield, 
 
 ## Project Management
 
-The work that needs to be done on this project is kept track of by [the issues on this repository](https://github.com/DSSD-Madison/couillard/issues). To contribute, create a new branch, make your changes, push, then make a pull request into main. The main branch is protected so that it can only be modified through merged pull requests, and pull requests can only be merged if at least one person approves it.
+The work that needs to be done on this project is kept track of by [the issues on this repository](https://github.com/DSSD-Madison/couillard/issues). To contribute, choose an issue (or multiple) to tackle and assign it to yourself so other people know that someone is working on it already. Create a new branch, make your changes, push, then make a pull request into main with the issue(s) linked. The main branch is protected so that it can only be modified through merged pull requests, and pull requests can only be merged if at least one person approves it.
 
 ## Problem and System Design
 
