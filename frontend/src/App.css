@@ -15,10 +15,15 @@ body {
     justify-content: center;
 }
 
+.header-links {
+    color: #fc9d03;
+}
+
 .link-row {
     display: flex;
     justify-content: space-between;
     align-items: center;
+    color: #fc9d03;
 }
 
 .intro {
@@ -44,7 +49,7 @@ body {
 
 .logo {
     font-size: 24px;
-    color: #F9FAF8;
+    color: #fc9d03;
 }
 
 ul {
@@ -67,7 +72,7 @@ p {
 }
 
 button {
-    background-color: #3882F6;
+    background-color: #fc9d03;
     padding: 5px;
     text-align: center;
     border-radius: 4px;
@@ -115,7 +120,7 @@ button {
     padding: 48px;
     gap: 16px;
     flex-direction: column;
-    background-color: #fc9d03;
+    background-color: white;
     padding-left: 24%;
     padding-right: 24%;
     justify-content: center;
