@@ -1,17 +1,18 @@
+from firebase_admin import initialize_app, firestore
 import random
 import os
 from dotenv import load_dotenv
 from faker import Faker
-from google.cloud import firestore
 from datetime import datetime
 from datetime import timedelta
+import pathlib
 
 fake = Faker()
 load_dotenv()
 
-service_account_key = os.getenv('SERVICE_ACCOUNT_KEY_PATH')
-project_id = os.getenv('PROJECT_ID')
-db = firestore.Client.from_service_account_json(service_account_key, project=project_id)
+os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =  str(pathlib.Path().resolve()) + "/cred.json"
+app = initialize_app()
+db = firestore.client(app)
 
 # random start date
 start_date = datetime(2022, 12, 20)

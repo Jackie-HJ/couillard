@@ -1,2 +1,3 @@
-backend/.env
-backend/couillard-b61b8-firebase-adminsdk-e3nek-bdcb7cbcef.json
+**/.env
+**/*.json
+**/venv
