@@ -1,12 +1,10 @@
 from firebase_admin import initialize_app, firestore
 import random
 import os
-from dotenv import load_dotenv
 from faker import Faker
 import pathlib
 
 fake = Faker()
-load_dotenv()
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =  str(pathlib.Path().resolve()) + "/cred.json"
 app = initialize_app()

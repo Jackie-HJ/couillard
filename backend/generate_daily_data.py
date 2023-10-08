@@ -1,21 +1,19 @@
 from firebase_admin import initialize_app, firestore
-import random
 import os
-from dotenv import load_dotenv
 from faker import Faker
 from datetime import datetime
 from datetime import timedelta
+import random
 import pathlib
 
 fake = Faker()
-load_dotenv()
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] =  str(pathlib.Path().resolve()) + "/cred.json"
 app = initialize_app()
 db = firestore.client(app)
 
 # random start date
-start_date = datetime(2022, 12, 20)
+start_date = datetime(2023, 9, 20)
 current_date = datetime.now()
 
 top_level_collection = 'Solar Arrays'
@@ -39,6 +37,7 @@ def populate_day(date):
 def populate_all_past_data(start_date, current_date):
     running_date = start_date
     while running_date <= current_date:
+        print(running_date)
         populate_day(running_date)
         running_date += timedelta(days=1)
         
