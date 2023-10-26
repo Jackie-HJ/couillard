@@ -12,5 +12,9 @@
     "@sveltejs/vite-plugin-svelte": "^2.4.2",
     "svelte": "^4.0.5",
     "vite": "^4.4.5"
+  },
+  "dependencies": {
+    "plotly.js": "^2.27.0",
+    "plotly.js-dist": "^2.27.0"
   }
 }
