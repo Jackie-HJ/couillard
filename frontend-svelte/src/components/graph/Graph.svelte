@@ -11,19 +11,34 @@
     }];
 
     const layout = {
-      title: 'Sample Graph',
       xaxis: {
-        title: 'X Axis'
+        title: "Date",
+        //range: [new Date(new Date().getTime() - 15768000), new Date()]   - last 6 months, can use this once we have data with dates
       },
       yaxis: {
-        title: 'Y Axis'
-      }
+        title: "Energy (kWh)",
+        fixedrange: true,
+      },
+      title: "Solar Array Output",
+      dragmode: "pan",
     };
 
     const config = {
-      responsive: true
-    };
+      responsive: true,
+      displaylogo: false,
+      modeBarButtonsToRemove: [
+        "autoScale2d",
+        "select2d",
+        "zoom2d",
+        "lasso2d",
+        "toImage",
+        "pan2d",
+      ],
 
+      displayModeBar: true,
+      scrollZoom: true,
+    };
+    //@ts-ignore
     Plotly.newPlot(container, data, layout, config);
   });
 </script>
