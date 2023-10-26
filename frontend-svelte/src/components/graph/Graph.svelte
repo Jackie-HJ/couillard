@@ -20,7 +20,11 @@
       }
     };
 
-    Plotly.newPlot(container, data, layout);
+    const config = {
+      responsive: true
+    };
+
+    Plotly.newPlot(container, data, layout, config);
   });
 </script>
   
