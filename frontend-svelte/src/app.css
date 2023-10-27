@@ -1,0 +1,293 @@
+:root {
+  font-family: Roboto, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  line-height: 1.5;
+  font-weight: 400;
+
+  color-scheme: light dark;
+  color: rgba(255, 255, 255, 0.87);
+  background-color: #103a71;
+
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  -webkit-text-size-adjust: 100%;
+}
+
+a {
+  font-weight: 500;
+  color: #646cff;
+  text-decoration: inherit;
+}
+a:hover {
+  color: #535bf2;
+}
+
+body {
+  margin: 0;
+  display: flex;
+  place-items: center;
+  min-width: 100vw;
+  min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  font-family: Roboto, system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+}
+
+h1 {
+  font-size: 3.2em;
+  line-height: 1.1;
+}
+
+.card {
+  padding: 2em;
+}
+
+#app {
+  text-align: center;
+  width: 100%;
+  height: 100%;
+}
+
+button {
+  border-radius: 8px;
+  border: 1px solid transparent;
+  padding: 0.6em 1.2em;
+  font-size: 1em;
+  font-weight: 500;
+  font-family: inherit;
+  background-color: #1a1a1a;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+button:hover {
+  border-color: #646cff;
+}
+button:focus,
+button:focus-visible {
+  outline: 4px auto -webkit-focus-ring-color;
+}
+
+@media (prefers-color-scheme: light) {
+  :root {
+    color: #213547;
+    background-color: #ffffff;
+  }
+  a:hover {
+    color: #747bff;
+  }
+  button {
+    background-color: #f9f9f9;
+  }
+}
+
+
+
+.header {
+  background-color: #103a71;
+  display: flex;
+  padding: 6px;
+  padding-left: 10%;
+  padding-right: 10%;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-links {
+  color: #f7931e;
+}
+
+.link-row {
+  display: flex;
+  justify-content: flex-start;
+  align-items: left;
+  color: #f7931e;
+}
+
+.intro {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+  padding-top: 48px;
+  padding-bottom: 48px;
+}
+
+.right-side {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  justify-content: center;
+}
+
+.main-text {
+  font-size: 48px;
+  font-weight: bolder;
+  color: #F9FAF8;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  font-size: 40px;
+  color: #f7931e;
+  border-radius: 50%;
+}
+
+#logo {
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+ul {
+  list-style-type: none;
+  display: flex;
+  gap: 16px;
+}
+
+a {
+  text-decoration: none;
+  font-size: 18px;
+  color: #E5E7EB;
+}
+
+p {
+  font-size: 18px;
+  margin: 0px;
+  font-weight: normal;
+}
+
+button {
+  background-color: #f7931e;
+  padding: 5px;
+  text-align: center;
+  border-radius: 4px;
+  width: 100px;
+  color: white;
+}
+
+#blue-button {
+  border: none;
+}
+
+.info-title {
+  font-size: 36px;
+  font-weight: bolder;
+  color: #1F2937;
+}
+
+
+.stats-row {
+  margin-top: 50px;
+  color: black;
+  font-weight: bold;
+  font-size: x-large;
+  background-color: #f7931e;
+  text-align: center;
+  padding: 20px;
+  font-size: 24px;
+}
+
+.row-arrange {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  padding: 20px;
+}
+
+.statistic {
+  text-align: center;
+  border: 10px white;
+  color: black;
+}
+
+.large {
+  font-size: 4rem;
+}
+
+.medium {
+  font-size: 1.5rem;
+}
+
+
+.illustrations {
+  display: flex;
+  gap: 36px;
+  padding-bottom: 24px;
+}
+
+.image {
+  display: flex;
+  width: 100px;
+  gap: 12px;
+  flex-direction: column;
+}
+
+#darker {
+  color: darkgray;
+}
+
+.quote {
+  display: flex;
+  padding: 48px;
+  gap: 16px;
+  flex-direction: column;
+  background-color: white;
+  padding-left: 24%;
+  padding-right: 24%;
+  justify-content: center;
+}
+
+.italics {
+  font-size: 36px;
+  font-style: italic;
+  font-weight: lighter;
+  color: #1F2937;
+}
+
+.attribution {
+  padding-right: 40px;
+  text-align: right;
+  font-size: 20px;
+}
+
+.action {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #F9FAF8;
+  padding: 60px;
+}
+
+.blue {
+  width: 75%;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: space-around;
+  background-color: #3882F6;
+  border-radius: 8px;
+  padding: 24px;
+}
+
+.right {
+  font-size: 24px;
+  font-weight: bold;
+  color: white;
+}
+
+#white-outline {
+  border-color: #F9FAF8;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #103a71;
+  color: white;
+  padding: 24px;
+}
