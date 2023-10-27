@@ -1,4 +1,4 @@
-# Couillard Solar Foundation: Deerfield Solar Project Impact
+# Couillard Solar Foundation: Deerfield Solar Analytics
 
 This project will visualize solar output data from 7 solar arrays in Deerfield, WI. It will show what a small community can achieve with solar, which will help to convince other small communities to adopt it. Couillard would also like more detailed information for administrative users.
 
