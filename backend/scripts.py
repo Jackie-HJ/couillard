@@ -12,12 +12,13 @@ import time, json
 chrome_options = Options()
 chrome_options.add_argument("--headless")  
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-arm64/chromedriver')
+driver_service = Service('./chromedriver-mac-x64/chromedriver')
 
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
+cookie = None
 
-def get_month_data(month, year):
+def get_cookie():
     url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
     driver.get(url)
 
@@ -31,10 +32,10 @@ def get_month_data(month, year):
     network_requests = [log['message'] for log in logs]
 
     # Process and print the network requests
-    cookie = None
     for req in network_requests:
         obj = json.loads(req)
         try:
+            global cookie
             cookie = obj["message"]["params"]["headers"]["Cookie"]
             break
         except KeyError:
@@ -44,6 +45,7 @@ def get_month_data(month, year):
     driver.quit()
 
 
+def get_month_data(month, year):
     url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=369bf812-62f9-4d4f-b1d4-4ee52ac4e47a&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
 
     headers = {
