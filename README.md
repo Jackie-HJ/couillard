@@ -10,7 +10,7 @@ The work that needs to be done on this project is kept track of by [the issues o
 
 The 7 arrays do not all use the same inverters, so the data collected is stored in different places. The challenge will be bringing all the data into one place.
 
-Backend: Python script cron job deployed to [cron-job.org](https://cron-job.org/en/), populates db with last days worth of data every day. Also can be run to populate db with all data up to the current date
+Backend: Python script cron job with GitHub Actions, populates db with last days worth of data every day. Also can be run to populate db with all data up to the current date
 
 Database: Firebase Firestore, same schema as [Helios Firestore](https://console.firebase.google.com/project/helios-9d435/firestore)
 
