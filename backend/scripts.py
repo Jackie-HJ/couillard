@@ -2,6 +2,7 @@ from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
 import requests
+from datetime import datetime, timedelta
 
 
 import time, json
@@ -39,7 +40,10 @@ for req in network_requests:
 # Close the browser
 driver.quit()
 
-url = 'https://www.solarweb.com/Chart/GetWidgetChart?PvSystemId=369bf812-62f9-4d4f-b1d4-4ee52ac4e47a&_=1697406048905'
+
+
+
+url = 'https://www.solarweb.com/Chart/GetChartNew?pvSystemId=369bf812-62f9-4d4f-b1d4-4ee52ac4e47a&year=2023&month=10&day=17&interval=month&view=production'
 
 headers = {
     'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -62,8 +66,8 @@ headers = {
 response = requests.get(url, headers=headers)
 
 if response.status_code == 200:
-    print(response.text)
     with open('api.json', 'w') as f:
+       print(response.text)
        f.write(response.text)
 else:
     print(f"Request failed with status code {response.status_code}")
