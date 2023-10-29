@@ -31,7 +31,7 @@
 
 .stats-row {
   margin-top: 50px;
-  color: black;
+  color: white;
   font-weight: bold;
   font-size: x-large;
   background-color: var(--couillard-blue-color);
@@ -50,7 +50,7 @@
 .statistic {
   text-align: center;
   border: 10px white;
-  color: black;
+  color: white;
 }
 
 .large {
