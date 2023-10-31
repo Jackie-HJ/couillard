@@ -14,6 +14,10 @@ const firebaseConfig = {
     measurementId: "G-4FBRG6M1VB"
 };
 
+const DATE_PATTERNS = {
+    "__default__": "MM-DD-YYYY",
+};
+
 interface PanelData {
     readonly name: string;
     readonly dates: readonly Date[];
@@ -38,6 +42,41 @@ function basename(path: string): string {
     return undefined as any;
 }
 
+function parseGenericDate(date: string, pattern: string): Date {
+    let cursor = 0;
+    let got = { month: '', day: '', year: '' };
+    for (const tok of pattern) {
+        let ch = date[cursor++];
+        switch (tok) {
+            case 'Y': case 'y':
+                got.year += ch;
+                break;
+            case 'M': case 'm':
+                got.month += ch;
+                break;
+            case 'D': case 'd':
+                got.day += ch;
+                break;
+            default:
+                if (ch !== tok) {
+                    console.warn(`In parseGenericDate, Pattern ${pattern} failed to match ${date}.`);   
+                }
+        }
+    }
+    if (cursor !== date.length) {
+        console.warn(`In parseGenericDate, Pattern ${pattern} missing end of ${date}.`);   
+    }
+    return new Date(
+        parseInt(got.year),
+        parseInt(got.month) - 1, // Months start at zero for some reason
+        parseInt(got.day),
+    );
+}
+
+function parseDateFromDb(date: string, panelName: string): Date {
+    return parseGenericDate(date, DATE_PATTERNS[panelName] || DATE_PATTERNS["__default__"]);
+}
+
 async function assemblePanelDataObjects(
     col: CollectionReference<DocumentData, DocumentData>
 ): Promise<readonly PanelData[]> {
@@ -51,15 +90,26 @@ async function assemblePanelDataObjects(
             unsortedYears[year] = Object.entries(outputDoc.data()["Output"]);
         });
         for (let k in unsortedYears) {
+            let sub = unsortedYears[k];
+            for (let i = 0; i < sub.length; i++) {
+                sub[i] = [
+                    parseDateFromDb(sub[i][0], panelName),
+                    sub[i][1],
+                ];
+            }
             unsortedYears[k].sort(
-                (a: [string, number], b: [string, number]) => Math.sign(
-                    (new Date(a[0]) as any) - (new Date(a[1]) as any)
+                (a: [string, number], b: [string, number]) => (
+                    (a[0] as any) - (b[0] as any)
                 )
             );
-            for (let i of unsortedYears[k]) {
-                console.log(i);
-            }
         }
+        let theYears = Object.keys(unsortedYears);
+        theYears.sort();
+        let everything = [];
+        for (let i of theYears) {
+            everything.push(...unsortedYears[i]);
+        }
+        console.log(everything);
     });
     return panelDataObjs;
 }
