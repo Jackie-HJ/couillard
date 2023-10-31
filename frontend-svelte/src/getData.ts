@@ -5,7 +5,7 @@ import {
 } from "firebase/firestore/lite";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.COUILLARD_FIREBASE_API_KEY,
+    apiKey: "AIzaSyA-YkNpPfhJg9uHoBCnPoKhhxZtGXtrDig",
     authDomain: "couillard-b61b8.firebaseapp.com",
     projectId: "couillard-b61b8",
     storageBucket: "couillard-b61b8.appspot.com",
