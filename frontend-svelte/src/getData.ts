@@ -77,18 +77,26 @@ function parseDateFromDb(date: string, panelName: string): Date {
     return parseGenericDate(date, DATE_PATTERNS[panelName] || DATE_PATTERNS["__default__"]);
 }
 
+async function asyncForEach(x: { forEach: any }, fn: (_: any) => Promise<any>): Promise<any> {
+    let promises: Promise<any>[] = [];
+    x.forEach(async y => {
+        promises.push(fn(y));
+    });
+    return Promise.all(promises);
+}
+
 async function assemblePanelDataObjects(
     col: CollectionReference<DocumentData, DocumentData>
 ): Promise<readonly PanelData[]> {
     let panelDataObjs: PanelData[] = [];
-    (await getDocs(col)).forEach(async panelDoc => {
+    await asyncForEach(await getDocs(col), (async panelDoc => {
         let panelName = panelDoc.get("name");
         let outputCol = collection(panelDoc.ref, "Output");
         let unsortedYears = Object.create(null);
-        (await getDocs(outputCol)).forEach(async outputDoc => {
+        await asyncForEach(await getDocs(outputCol), (async outputDoc => {
             let year = basename(outputDoc.ref.path); // kinda hacky but oh well
             unsortedYears[year] = Object.entries(outputDoc.data()["Output"]);
-        });
+        }));
         for (let k in unsortedYears) {
             let sub = unsortedYears[k];
             for (let i = 0; i < sub.length; i++) {
@@ -105,11 +113,17 @@ async function assemblePanelDataObjects(
         }
         let theYears = Object.keys(unsortedYears);
         theYears.sort();
-        let everything = [];
+        let dates = [];
+        let outputs = [];
         for (let i of theYears) {
-            everything.push(...unsortedYears[i]);
+            dates.push(...unsortedYears[i].map((x: [Date, number]) => x[0]));
+            outputs.push(...unsortedYears[i].map((x: [Date, number]) => x[1]));
         }
-        console.log(everything);
-    });
+        panelDataObjs.push({
+            name: panelName,
+            dates: dates,
+            outputs: outputs,
+        } as const);
+    }));
     return panelDataObjs;
 }
