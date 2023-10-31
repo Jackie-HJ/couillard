@@ -33,13 +33,12 @@ export default async function getData() {
     return [1, 2, 2, 4];
 };
 
-function basename(path: string): string {
+function basename(path: string): string | undefined {
     for (let i = path.length - 1; i >= 0; i--) {
         if (path[i] === "/") {
             return path.slice(i + 1);
         }
     }
-    return undefined as any;
 }
 
 function parseGenericDate(date: string, pattern: string): Date {
@@ -95,6 +94,10 @@ async function assemblePanelDataObjects(
         let unsortedYears = Object.create(null);
         await asyncForEach(await getDocs(outputCol), (async outputDoc => {
             let year = basename(outputDoc.ref.path); // kinda hacky but oh well
+            if (year === undefined) {
+                console.warn('basename failed, year undefined');
+                return;
+            }
             unsortedYears[year] = Object.entries(outputDoc.data()["Output"]);
         }));
         for (let k in unsortedYears) {
