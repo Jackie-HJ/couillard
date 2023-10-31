@@ -1,14 +1,16 @@
 <script>
   import { onMount } from 'svelte';
-  import Plotly from 'plotly.js-dist';
+  import Plotly, { getDataToPixel } from 'plotly.js-dist';
+
+  import getData from '../../getData';
 
   let container;
 
-  onMount(() => {
-    const data = [{
-      x: [1, 2, 3, 4, 5],
-      y: [1, 2, 4, 8, 16]
-    }];
+  onMount(async () => {
+    const originalData = await getData();
+    const data = [
+      originalData["Kelly Lane"],
+    ];
 
     const layout = {
       xaxis: {
