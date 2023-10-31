@@ -14,8 +14,9 @@ const firebaseConfig = {
     measurementId: "G-4FBRG6M1VB"
 };
 
+// { <panelName>: [<date-format>, <source-timezone-offset>] }
 const DATE_PATTERNS = {
-    "__default__": "MM-DD-YYYY",
+    "__default__": ["MM-DD-YYYY", 5],
 };
 
 interface PanelData {
@@ -39,7 +40,9 @@ function basename(path: string): string | undefined {
     }
 }
 
-function parseGenericDate(date: string, pattern: string): Date {
+function parseGenericDate(date: string, patterns: [string, number]): Date {
+    let [pattern, sourceTimezoneOffsetHrs ] = patterns;
+    let sourceTimezoneOffset = sourceTimezoneOffsetHrs * 60;
     let cursor = 0;
     let got = { month: '', day: '', year: '' };
     for (const tok of pattern) {
@@ -67,11 +70,14 @@ function parseGenericDate(date: string, pattern: string): Date {
         parseInt(got.year),
         parseInt(got.month) - 1, // Months start at zero for some reason
         parseInt(got.day),
+        0, // Nothing special for hours
+        (new Date()).getTimezoneOffset() - sourceTimezoneOffset, // TZ offsets in minutes
     );
 }
 
 function parseDateFromDb(date: string, panelName: string): Date {
-    return parseGenericDate(date, DATE_PATTERNS[panelName] || DATE_PATTERNS["__default__"]);
+    return parseGenericDate(
+        date, DATE_PATTERNS[panelName] || DATE_PATTERNS["__default__"]);
 }
 
 async function asyncForEach(x: { forEach: any }, fn: (_: any) => Promise<any>): Promise<any> {
