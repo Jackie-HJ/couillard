@@ -19,12 +19,11 @@ const DATE_PATTERNS = {
 };
 
 interface PanelData {
-    readonly name: string;
-    readonly dates: readonly Date[];
-    readonly outputs: readonly number[];
+    readonly x: readonly Date[];
+    readonly y: readonly number[];
 }
 
-export default async function getData() {
+export default async function getData(): Promise<{ [key: string]: PanelData }> {
     const app = initializeApp(firebaseConfig);
     let db = getFirestore(app);
     let col = collection(db, "Solar Arrays");
@@ -85,8 +84,8 @@ async function asyncForEach(x: { forEach: any }, fn: (_: any) => Promise<any>): 
 
 async function assemblePanelDataObjects(
     col: CollectionReference<DocumentData, DocumentData>
-): Promise<readonly PanelData[]> {
-    let panelDataObjs: PanelData[] = [];
+): Promise<{ [key: string]: PanelData }> {
+    let panelDataObjs: { [key: string]: PanelData } = Object.create(null);
     await asyncForEach(await getDocs(col), (async panelDoc => {
         let panelName = panelDoc.get("name");
         let outputCol = collection(panelDoc.ref, "Output");
@@ -121,11 +120,10 @@ async function assemblePanelDataObjects(
             dates.push(...unsortedYears[i].map((x: [Date, number]) => x[0]));
             outputs.push(...unsortedYears[i].map((x: [Date, number]) => x[1]));
         }
-        panelDataObjs.push({
-            name: panelName,
-            dates: dates,
-            outputs: outputs,
-        } as const);
+        panelDataObjs[panelName] = {
+            x: dates,
+            y: outputs,
+        } as const;
     }));
     return panelDataObjs;
 }
