@@ -5,18 +5,17 @@ import {
 } from "firebase/firestore/lite";
 
 const firebaseConfig = {
-    apiKey: "AIzaSyAaZSAsa9-7O_ffxqPPVbUsMZ13eDXH7TU",
-    authDomain: "helios-9d435.firebaseapp.com",
-    projectId: "helios-9d435",
-    storageBucket: "helios-9d435.appspot.com",
-    messagingSenderId: "768984637940",
-    appId: "1:768984637940:web:90dee43f1fc4aeafbdd9a1",
-    measurementId: "G-4FBRG6M1VB"
+    apiKey: import.meta.env.COUILLARD_FIREBASE_API_KEY,
+    authDomain: "couillard-b61b8.firebaseapp.com",
+    projectId: "couillard-b61b8",
+    storageBucket: "couillard-b61b8.appspot.com",
+    messagingSenderId: "446169152794",
+    appId: "1:446169152794:web:ff8f700af19ef89ff200a3"
 };
 
 // { <panelName>: [<date-format>, <source-timezone-offset>] }
 const DATE_PATTERNS = {
-    "__default__": ["MM-DD-YYYY", 5],
+    "__default__": ["YYYY-MM-DD", 5],
 };
 
 interface PanelData {
