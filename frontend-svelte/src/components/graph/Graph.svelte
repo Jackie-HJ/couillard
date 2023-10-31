@@ -1,6 +1,8 @@
 <script>
   import { onMount } from 'svelte';
-  import Plotly from 'plotly.js-dist';
+  import Plotly, { getDataToPixel } from 'plotly.js-dist';
+
+  import getData from '../../getData';
 
   let container;
 
@@ -9,6 +11,8 @@
       x: [1, 2, 3, 4, 5],
       y: [1, 2, 4, 8, 16]
     }];
+
+    getData();
 
     const layout = {
       xaxis: {
