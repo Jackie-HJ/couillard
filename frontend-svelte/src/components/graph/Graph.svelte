@@ -9,7 +9,7 @@
   onMount(async () => {
     const originalData = await getData();
     const data = [
-      originalData["Arboretum"],
+      originalData["Kelly Lane"],
     ];
 
     const layout = {
