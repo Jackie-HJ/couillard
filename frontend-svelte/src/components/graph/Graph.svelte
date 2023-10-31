@@ -6,13 +6,11 @@
 
   let container;
 
-  onMount(() => {
-    const data = [{
-      x: [1, 2, 3, 4, 5],
-      y: [1, 2, 4, 8, 16]
-    }];
-
-    getData();
+  onMount(async () => {
+    const originalData = await getData();
+    const data = [
+      originalData["Arboretum"],
+    ];
 
     const layout = {
       xaxis: {
