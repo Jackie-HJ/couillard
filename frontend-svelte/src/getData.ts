@@ -29,8 +29,7 @@ export default async function getData() {
     let db = getFirestore(app);
     let col = collection(db, "Solar Arrays");
     let panelDataObjs = await assemblePanelDataObjects(col);
-    console.log(panelDataObjs);
-    return [1, 2, 2, 4];
+    return panelDataObjs;
 };
 
 function basename(path: string): string | undefined {
