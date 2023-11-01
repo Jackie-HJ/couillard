@@ -2,14 +2,13 @@
   import { onMount } from 'svelte';
   import Plotly, { getDataToPixel } from 'plotly.js-dist';
 
-  import getData from '../../getData';
+  import { dbData as dbDataStore } from '../../stores';
 
   let container;
 
-  onMount(async () => {
-    const originalData = await getData();
+  async function renderPlot(dbData) {
     const data = [
-      originalData["Kelly Lane"],
+      dbData["Kelly Lane"],
     ];
 
     const layout = {
@@ -42,6 +41,10 @@
     };
     //@ts-ignore
     Plotly.newPlot(container, data, layout, config);
+  }
+  
+  onMount(() => {
+    dbDataStore.subscribe(renderPlot);
   });
 </script>
   

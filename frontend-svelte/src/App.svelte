@@ -3,7 +3,6 @@
   import Home from "./components/home/Home.svelte"
   import Footer from "./components/footer/Footer.svelte"
   import Graph from "./components/graph/Graph.svelte"
-
 </script>
 
 <main>
