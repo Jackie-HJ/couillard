@@ -48,7 +48,9 @@
   }
   
   onMount(() => {
-    dbDataStore.subscribe(renderPlot);
+    dbDataStore.subscribe(async promise => {
+      renderPlot(await promise);
+    });
   });
 </script>
   

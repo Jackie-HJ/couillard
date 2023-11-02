@@ -3,7 +3,7 @@ import { readable, derived } from 'svelte/store';
 import getData from './getData';
 import { type PanelData } from './getData';
 
-export const dbData = readable(await getData());
+export const dbData = readable(getData());
 
 const LBS_CO2_PER_KWH = 1.52;
 const DOLLARS_SAVED_PER_KWH = 0.10;
@@ -33,4 +33,4 @@ function calcTotal(data: { [key: string]: PanelData }) {
     };
 }
 
-export const totalData = derived(dbData, calcTotal);
+export const totalData = derived(dbData, promise => promise.then(calcTotal));

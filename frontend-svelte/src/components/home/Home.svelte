@@ -1,8 +1,13 @@
 <script>
+    import { onMount } from 'svelte';
   import { totalData } from '../../stores';
 
-  let totals;
-  totalData.subscribe(x => { totals = x; });
+  let totals = { original: 0, derived: [], };
+  onMount(() => {
+    totalData.subscribe(async promise => {
+      totals = await promise;
+    });
+  });
 
   const compactNumberFormatter = Intl.NumberFormat('en', {
     notation: 'compact',
