@@ -18,7 +18,7 @@ const DATE_PATTERNS = {
     "__default__": ["YYYY-MM-DD", 5],
 };
 
-interface PanelData {
+export interface PanelData {
     readonly x: readonly Date[];
     readonly y: readonly number[];
 }

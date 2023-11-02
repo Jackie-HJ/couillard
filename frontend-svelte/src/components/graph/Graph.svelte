@@ -2,15 +2,18 @@
   import { onMount } from 'svelte';
   import Plotly, { getDataToPixel } from 'plotly.js-dist';
 
-  import getData from '../../getData';
+  import { dbData as dbDataStore } from '../../stores';
 
   let container;
 
-  onMount(async () => {
-    const originalData = await getData();
-    const data = [
-      originalData["Kelly Lane"],
-    ];
+  async function renderPlot(dbData) {
+    const data = [];
+    for (const [panelName, xy] of Object.entries(dbData)) {
+      data.push({
+        name: `${panelName} (kWh)`,
+        ...xy,
+      });
+    }
 
     const layout = {
       xaxis: {
@@ -42,6 +45,12 @@
     };
     //@ts-ignore
     Plotly.newPlot(container, data, layout, config);
+  }
+  
+  onMount(() => {
+    dbDataStore.subscribe(async promise => {
+      renderPlot(await promise);
+    });
   });
 </script>
   
