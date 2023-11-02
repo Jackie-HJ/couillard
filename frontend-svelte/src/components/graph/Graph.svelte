@@ -7,9 +7,13 @@
   let container;
 
   async function renderPlot(dbData) {
-    const data = [
-      dbData["Kelly Lane"],
-    ];
+    const data = [];
+    for (const [panelName, xy] of Object.entries(dbData)) {
+      data.push({
+        name: `${panelName} (kWh)`,
+        ...xy,
+      });
+    }
 
     const layout = {
       xaxis: {
