@@ -1,23 +1,31 @@
+<script>
+  import { totalData } from '../../stores';
+
+  let totals;
+  totalData.subscribe(x => { totals = x; });
+
+  const compactNumberFormatter = Intl.NumberFormat('en', {
+    notation: 'compact',
+    maximumSignificantDigits: 4,
+  });
+  const fmtNum = x => compactNumberFormatter.format(x);
+</script>
+
 <div class="stats-row">
     Solar panels have saved, to date:
   <div class="row-arrange">
-    <div class="statistic">
-        <p class="large">22.22K</p>
-        <p class="medium">$ Saved</p>
-        <p class="small">*based on $0.10 per kWh</p>
-    </div>
-  
-    <div class="statistic">
-      <p class="large">222.22K</p>
-      <p class="medium">lb CO2 Saved</p>
-      <p class="small">*based on 1.52lb CO2 per kWh</p>
-    </div>
-  
-    <div class="statistic">
-      <p class="large">222.22K</p>
-      <p class="medium">kWh Gen.</p>
-    </div>
-
+    {#each totals.derived as [conv, unit, showDesc]}
+      <div class="statistic">
+          <p class="large">{(unit[0] === "$" ? "$" : "")}{fmtNum(conv * totals.original)}</p>
+          <p class="medium">{unit[0] === "$" ? unit.slice(1) : unit}</p>
+          {#if showDesc}
+            <p class="small">
+              *Based on {(unit[0] === "$" ? "$" : "")}{conv}
+              {unit[0] === "$" ? unit.slice(1) : unit} per kWh
+            </p>
+          {/if}
+      </div>
+    {/each}
   </div>
 </div>
 
@@ -58,6 +66,10 @@
 }
 
 .medium {
-  font-size: 1.5rem;
+  font-size: 2rem;
+}
+
+.small {
+  font-size: 1rem;
 }
 </style>
