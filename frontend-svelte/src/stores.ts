@@ -22,15 +22,7 @@ function calcTotal(data: { [key: string]: PanelData }) {
             total += output;
         }
     }
-    return {
-        original: total,
-        derived: [
-            // conversion factor, unit, show description
-            [0.10, "$Saved",       true],
-            [1.52, "lbs CO2 Saved", true],
-            [1,    "kWh Generated", false],
-        ],
-    };
+    return total;
 }
 
 export const totalData = derived(dbData, promise => promise.then(calcTotal));
