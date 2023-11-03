@@ -28,10 +28,13 @@
   const currencySymbol = broke.replaceAll("0", "").replaceAll(".", "");
   function pickSiPrefix(num, just) {
     let everything = siNumberFormatter.format(num).replace("K", "k");
+    let prefixless = !(/[A-Za-z]$/.test(everything));
     switch (just) {
       case "prefix":
+        if (prefixless) return "";
         return everything.slice(-1);
       case "number":
+        if (prefixless) return everything;
         return everything.slice(0, -1);
       default:
         console.warn("Returning undefined SI prefix, withOrWithout must be prefix or number.");
