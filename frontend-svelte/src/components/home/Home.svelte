@@ -23,6 +23,8 @@
   const moneyFormatter = Intl.NumberFormat(FORMATTING_LOCALE, {
     style: 'currency',
     currency: CURRENCY,
+    maximumFractionDigits: 0, 
+    minimumFractionDigits: 0, 
   });
   const broke = moneyFormatter.format(0);
   const currencySymbol = broke.replaceAll("0", "").replaceAll(".", "");
