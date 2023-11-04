@@ -20,11 +20,15 @@
     notation: 'compact',
     maximumSignificantDigits: SIG_CHARS,
   })
+  const moneyFormatterNoDP = Intl.NumberFormat(FORMATTING_LOCALE, {
+    style: 'currency',
+    currency: CURRENCY,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
   const moneyFormatter = Intl.NumberFormat(FORMATTING_LOCALE, {
     style: 'currency',
     currency: CURRENCY,
-    maximumFractionDigits: 0, 
-    minimumFractionDigits: 0, 
   });
   const broke = moneyFormatter.format(0);
   const currencySymbol = broke.replaceAll("0", "").replaceAll(".", "");
@@ -42,10 +46,12 @@
         console.warn("Returning undefined SI prefix, withOrWithout must be prefix or number.");
     }
   }
-  function fmtNum(num, unitType) {
+  function fmtNum(num, unitType, currencyShowDP = false) {
     switch (unitType) {
       case "money":
-        return moneyFormatter.format(num);
+        return (
+          currencyShowDP ? moneyFormatter : moneyFormatterNoDP
+        ).format(num);
       case "si":
         return pickSiPrefix(num, "number");
       case "simple":
@@ -84,7 +90,7 @@
           <p class="medium">{fmtUnit(conv * totals, unit, unitType)}</p>
           {#if showDesc}
             <p class="small">
-              *Based on {fmtNum(conv, unitType)}
+              *Based on {fmtNum(conv, unitType, true)}
               {fmtUnit(conv, unit, unitType, true)} per kWh
             </p>
           {/if}
