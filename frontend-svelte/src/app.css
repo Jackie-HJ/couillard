@@ -1,11 +1,12 @@
+@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@400;500&display=swap');
 :root {
-  font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+  font-family: 'Roboto', system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
   font-weight: 400;
 
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: white;
 
   font-synthesis: none;
   text-rendering: optimizeLegibility;
@@ -13,7 +14,22 @@
   -moz-osx-font-smoothing: grayscale;
   -webkit-text-size-adjust: 100%;
 
+  /* Couillard colors */
+  --couillard-blue-color: rgb(16, 58, 113);
+  --couillard-orange-color: rgb(247, 147, 30);
 }
+
+/*
+Todo: Torus font
+
+@font-face {
+  font-family: 'Torus';
+  src: url('path/to/torus.woff2') format('woff2'),
+  url('path/to/torus.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+*/
 
 a {
   font-weight: 500;
@@ -28,8 +44,13 @@ body {
   margin: 0;
   display: flex;
   place-items: center;
-  min-width: 320px;
+  min-width: 100vw;
   min-height: 100vh;
+  width: 100%;
+  height: 100%;
+  box-sizing: border-box;
+  flex-direction: column;
+  font-family: 'Roboto', system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
 }
 
 h1 {
@@ -42,10 +63,9 @@ h1 {
 }
 
 #app {
-  max-width: 1280px;
-  margin: 0 auto;
-  padding: 2rem;
   text-align: center;
+  width: 100%;
+  height: 100%;
 }
 
 button {
@@ -80,33 +100,15 @@ button:focus-visible {
   }
 }
 
-
-body {
-  margin: 0px;
-  display: flex;
-  flex-direction: column;
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
-}
-
-.header {
-  background-color: #1F2937;
-  display: flex;
-  padding: 6px;
-  padding-left: 10%;
-  padding-right: 10%;
-  flex-direction: column;
-  justify-content: center;
-}
-
 .header-links {
-  color: #fc9d03;
+  color: #f7931e;
 }
 
 .link-row {
   display: flex;
-  justify-content: space-between;
-  align-items: center;
-  color: #fc9d03;
+  justify-content: flex-start;
+  align-items: left;
+  color: #f7931e;
 }
 
 .intro {
@@ -130,11 +132,6 @@ body {
   color: #F9FAF8;
 }
 
-.logo {
-  font-size: 24px;
-  color: #fc9d03;
-}
-
 ul {
   list-style-type: none;
   display: flex;
@@ -147,15 +144,8 @@ a {
   color: #E5E7EB;
 }
 
-p {
-  font-size: 18px;
-  color: #E5E7EB;
-  margin: 0px;
-  font-weight: normal;
-}
-
 button {
-  background-color: #fc9d03;
+  background-color: #f7931e;
   padding: 5px;
   text-align: center;
   border-radius: 4px;
@@ -165,20 +155,6 @@ button {
 
 #blue-button {
   border: none;
-}
-
-.information {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 24px;
-  padding: 24px;
-}
-
-.info-title {
-  font-size: 36px;
-  font-weight: bolder;
-  color: #1F2937;
 }
 
 .illustrations {
@@ -250,12 +226,4 @@ button {
 
 #white-outline {
   border-color: #F9FAF8;
-}
-
-.footer {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  background-color: #1F2937;
-  padding: 24px;
 }
