@@ -4,7 +4,8 @@ from faker import Faker
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
 from datetime import timedelta
-from scripts import get_month_data, get_cookie
+from scripts import get_month_data, get_cookie_fronius
+from auroravision import get_month_data_auroravision, get_cookie_auroravision
 import pathlib
 
 fake = Faker()
@@ -63,7 +64,7 @@ def populate_past_data(start_date, current_date, pvSystemId, document):
 
 if __name__ == '__main__':
     pvSystemId = ''
-    get_cookie()
+    get_cookie_fronius()
     documents = db.collection(top_level_collection).stream()
     documentToPass = None
     for document in documents:
