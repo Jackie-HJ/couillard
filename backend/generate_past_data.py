@@ -54,17 +54,37 @@ def populate_month(month_data, year, document):
     year_doc_ref.set(data_to_merge, merge=True)
 
 
-def populate_past_data(start_date, current_date, pvSystemId, document):
+def populate_past_data_fronius(start_date, current_date, pvSystemId, document):
     running_date = start_date
     while running_date <= current_date:
         populate_month(get_month_data(
             running_date.month, running_date.year, pvSystemId), running_date.year, document)
         running_date += relativedelta(months=1)
+        
+def populate_past_data_auroravision(eids, start_date, end_date, cookie, document):
+    running_date = start_date
+    while running_date <= current_date:
+        # to avoid complications with the year
+        if running_date.month == 12 and running_date.day != 1:
+            running_date.day = 2
 
+        populate_month(get_month_data_auroravision(eids,
+            generate_auroravision_date(running_date), generate_auroravision_date(running_date + relativedelta(days=30)), cookie), running_date.year, document)
+        
+        running_date += relativedelta(days=30)
 
+def generate_auroravision_date(date):
+    date_string = ''
+    day = date.day
+    if (day < 10):
+        day = '0' + str(day)
+
+    return str(date.year) + str(date.month) + str(day)
+    
 if __name__ == '__main__':
     pvSystemId = ''
     get_cookie_fronius()
+    auroravision_cookie = get_cookie_auroravision()
     documents = db.collection(top_level_collection).stream()
     documentToPass = None
     for document in documents:
@@ -72,5 +92,10 @@ if __name__ == '__main__':
             print(document.to_dict())
             pvSystemId = document.to_dict()["pvSystemId"]
             print("pvSystemId: " + pvSystemId)
-            documentToPass = document
-            populate_past_data(start_date, current_date, pvSystemId, document)
+            populate_past_data_fronius(start_date, current_date, pvSystemId, document)
+        elif document.to_dict()["type"] == "auroravision":
+            print(document.to_dict())
+            eids = document.to_dict()["entityId"]
+            print("entityId: " + eids)
+            print(populate_past_data_auroravision(eids, start_date, current_date, auroravision_cookie, document))
+            

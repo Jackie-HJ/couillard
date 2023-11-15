@@ -2,3 +2,5 @@
 **/*.json
 **/venv
 **/couillard-backend
+**/__pycache__/
+**/chromedriver-mac-x64/

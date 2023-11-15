@@ -61,17 +61,20 @@ def get_month_data_auroravision(eids, start_date, end_date, cookie):
     response = requests.get(url, headers=headers)
 
     if response.status_code == 200:
-        data = json.loads(response.text).get('chartData', [])
-        print(json.loads(response.text))
-
+        data = json.loads(response.text)
+        print("\n")
+        print(data)
+        print("\n")
+        values = data['fields'][1]['values']
         retval = {}
-
-        for entry in data:
-            ts = entry['timestamp']
-            val = entry['value']
-            dt_object = datetime.fromtimestamp(ts / 1000, pytz.timezone('GMT'))
+        for value in values:
+            ts = value['start']
+            val = value['value']
+            dt_object = datetime.fromtimestamp(ts, pytz.timezone('GMT'))
             date_string = dt_object.strftime('%Y-%m-%d')
             retval[date_string] = val
+
+        retval = {}
 
         return retval
 
