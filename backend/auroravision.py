@@ -6,19 +6,19 @@ import requests
 from datetime import datetime, timedelta
 import pytz
 
-start_date = datetime(2022, 10, 1)
+
 
 # Set up Chrome options
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-arm64/chromedriver')
+driver_service = Service('./chromedriver-mac-x64/chromedriver')
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
 
-def get_cookie_auroravision():
+def get_cookie_auroravision(eids):
 
-    url = 'https://easyview.auroravision.net/easyview/index.html?entityId=17722147'
+    url = 'https://easyview.auroravision.net/easyview/index.html?entityId=' + eids
     driver.get(url)
 
     # Wait for the page to load and make any necessary interactions
@@ -42,7 +42,7 @@ def get_cookie_auroravision():
 
 def get_month_data_auroravision(eids, start_date, end_date, cookie):
     url = f'https://easyview.auroravision.net/easyview/services/gmi/summary/GenerationEnergy.json?type=GenerationEnergy&eids={eids}&tz=America%2FChicago&start={start_date}&end={end_date}&range=30D&hasUsage=false&label=30D&dataProperty=chartData&binSize=Min15&bins=true&plantPowerNow=false&v=2.1.62'
-    print(url)
+    # print(url)
     headers = {
         'Accept': 'application/json',
         'Sec-Fetch-Site': 'same-origin',
@@ -78,10 +78,9 @@ def get_month_data_auroravision(eids, start_date, end_date, cookie):
             date_string = dt_object.strftime('%Y-%m-%d')
             retval[date_string] = val
             
-        print(retval)
+        # print(retval)
         return retval
 
-    print("UIFWJNFEW")
     return None
 
 if __name__ == '__main__':

@@ -15,8 +15,8 @@ os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(
 app = initialize_app()
 db = firestore.client(app)
 
-# start date of fronius
-start_date = datetime(2022, 10, 1)
+start_date_fronius = datetime(2020, 6, 1)
+start_date_auroravision = datetime(2022, 12, 1)
 current_date = datetime.now()
 
 top_level_collection = 'Solar Arrays'
@@ -57,21 +57,24 @@ def populate_month(month_data, year, document):
 def populate_past_data_fronius(start_date, current_date, pvSystemId, document):
     running_date = start_date
     while running_date <= current_date:
-        populate_month(get_month_data(
-            running_date.month, running_date.year, pvSystemId), running_date.year, document)
+        month_data = get_month_data(running_date.month, running_date.year, pvSystemId)
+        print(month_data)
+        populate_month(month_data, running_date.year, document)
         running_date += relativedelta(months=1)
         
 def populate_past_data_auroravision(eids, start_date, end_date, cookie, document):
     running_date = start_date
     while running_date <= current_date:
         # to avoid complications with the year
-        if running_date.month == 12 and running_date.day != 1:
-            running_date = datetime(running_date.year, running_date.month, 2)
+        if running_date.month == 12 and running_date.day != 1 and running_date.day != 2:
+            running_date = datetime(running_date.year, running_date.month, 3)
+        print("DATE: " + generate_auroravision_date(running_date))
 
-        
-
-        populate_month(get_month_data_auroravision(eids,
-            generate_auroravision_date(running_date), generate_auroravision_date(running_date + relativedelta(days=30)), cookie), running_date.year, document)
+        month_data = get_month_data_auroravision(eids,
+            generate_auroravision_date(running_date), generate_auroravision_date(running_date + relativedelta(days=30)), cookie)
+        if month_data != None:
+            print(month_data)
+            populate_month(month_data, running_date.year, document)
         
         running_date += relativedelta(days=30)
 
@@ -86,19 +89,18 @@ def generate_auroravision_date(date):
 if __name__ == '__main__':
     pvSystemId = ''
     get_cookie_fronius()
-    auroravision_cookie = get_cookie_auroravision()
+    
     documents = db.collection(top_level_collection).stream()
     documentToPass = None
     for document in documents:
         if document.to_dict()["type"] == "fronius":
             pass
-            # print(document.to_dict())
+            # print("\nGENERATING FRONIUS ARRAY for " + document.to_dict()["name"] + "\n")
             # pvSystemId = document.to_dict()["pvSystemId"]
-            # print("pvSystemId: " + pvSystemId)
-            # populate_past_data_fronius(start_date, current_date, pvSystemId, document)
+            # populate_past_data_fronius(start_date_fronius, current_date, pvSystemId, document)
         elif document.to_dict()["type"] == "auroravision":
-            print(document.to_dict())
+            print("\nGENERATING AURORAVISION ARRAY for " + document.to_dict()["name"] + "\n")
             eids = document.to_dict()["entityId"]
-            print("entityId: " + eids)
-            print(populate_past_data_auroravision(eids, start_date, current_date, auroravision_cookie, document))
+            auroravision_cookie = get_cookie_auroravision(eids)
+            populate_past_data_auroravision(eids, start_date_auroravision, current_date, auroravision_cookie, document)
             
