@@ -66,7 +66,9 @@ def populate_past_data_auroravision(eids, start_date, end_date, cookie, document
     while running_date <= current_date:
         # to avoid complications with the year
         if running_date.month == 12 and running_date.day != 1:
-            running_date.day = 2
+            running_date = datetime(running_date.year, running_date.month, 2)
+
+        
 
         populate_month(get_month_data_auroravision(eids,
             generate_auroravision_date(running_date), generate_auroravision_date(running_date + relativedelta(days=30)), cookie), running_date.year, document)
@@ -89,10 +91,11 @@ if __name__ == '__main__':
     documentToPass = None
     for document in documents:
         if document.to_dict()["type"] == "fronius":
-            print(document.to_dict())
-            pvSystemId = document.to_dict()["pvSystemId"]
-            print("pvSystemId: " + pvSystemId)
-            populate_past_data_fronius(start_date, current_date, pvSystemId, document)
+            pass
+            # print(document.to_dict())
+            # pvSystemId = document.to_dict()["pvSystemId"]
+            # print("pvSystemId: " + pvSystemId)
+            # populate_past_data_fronius(start_date, current_date, pvSystemId, document)
         elif document.to_dict()["type"] == "auroravision":
             print(document.to_dict())
             eids = document.to_dict()["entityId"]

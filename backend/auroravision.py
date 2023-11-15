@@ -12,7 +12,7 @@ start_date = datetime(2022, 10, 1)
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-x64/chromedriver')
+driver_service = Service('./chromedriver-mac-arm64/chromedriver')
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
 
@@ -42,7 +42,7 @@ def get_cookie_auroravision():
 
 def get_month_data_auroravision(eids, start_date, end_date, cookie):
     url = f'https://easyview.auroravision.net/easyview/services/gmi/summary/GenerationEnergy.json?type=GenerationEnergy&eids={eids}&tz=America%2FChicago&start={start_date}&end={end_date}&range=30D&hasUsage=false&label=30D&dataProperty=chartData&binSize=Min15&bins=true&plantPowerNow=false&v=2.1.62'
-    print(cookie)
+    print(url)
     headers = {
         'Accept': 'application/json',
         'Sec-Fetch-Site': 'same-origin',
@@ -62,24 +62,28 @@ def get_month_data_auroravision(eids, start_date, end_date, cookie):
 
     if response.status_code == 200:
         data = json.loads(response.text)
-        print("\n")
-        print(data)
-        print("\n")
+        # print("\n")
+        # print(data)
+        # print("\n")
         values = data['fields'][1]['values']
         retval = {}
         for value in values:
             ts = value['start']
-            val = value['value']
+            val = 0
+            try:
+                val = value['value']
+            except KeyError:
+                pass
             dt_object = datetime.fromtimestamp(ts, pytz.timezone('GMT'))
             date_string = dt_object.strftime('%Y-%m-%d')
             retval[date_string] = val
-
-        retval = {}
-
+            
+        print(retval)
         return retval
 
+    print("UIFWJNFEW")
     return None
 
-
-cookie = get_cookie_auroravision()
-print(get_month_data_auroravision('17722147', '20231015', '20231115', cookie))
+if __name__ == '__main__':
+    cookie = get_cookie_auroravision()
+    print(get_month_data_auroravision('17722147', '20231015', '20231115', cookie))
