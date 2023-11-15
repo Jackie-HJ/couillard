@@ -12,7 +12,7 @@ import time, json
 chrome_options = Options()
 chrome_options.add_argument("--headless")  
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-x64/chromedriver')
+driver_service = Service('./chromedriver-mac-arm64/chromedriver')
 
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
@@ -46,8 +46,8 @@ def get_cookie(pvSystemId):
     driver.quit()
 
 
-def get_month_data(month, year, pvSystemId):
-    url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=" + pvSystemId + "&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
+def get_month_data(month, year, id):
+    url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=" + id + "&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
 
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -56,7 +56,7 @@ def get_month_data(month, year, pvSystemId):
         'Connection': 'keep-alive',
         'Cookie': cookie,
         'Pragma': 'no-cache',
-        'Referer': 'https://www.solarweb.com/PvSystems/PvSystem?pvSystemId=pvSystemId=' + pvSystemId,
+        'Referer': 'https://www.solarweb.com/PvSystems/PvSystem?pvSystemId=' + id,
         'Sec-Fetch-Dest': 'empty',
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
