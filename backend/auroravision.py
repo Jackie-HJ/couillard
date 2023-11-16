@@ -12,7 +12,7 @@ import pytz
 chrome_options = Options()
 chrome_options.add_argument("--headless")
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-arm64/chromedriver')
+driver_service = Service('./chromedriver-mac-x64/chromedriver')
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
 
@@ -62,9 +62,7 @@ def get_month_data_auroravision(eids, start_date, end_date, cookie):
 
     if response.status_code == 200:
         data = json.loads(response.text)
-        # print("\n")
-        # print(data)
-        # print("\n")
+
         values = data['fields'][1]['values']
         retval = {}
         for value in values:
@@ -74,9 +72,10 @@ def get_month_data_auroravision(eids, start_date, end_date, cookie):
                 val = value['value']
             except KeyError:
                 pass
-            dt_object = datetime.fromtimestamp(ts, pytz.timezone('GMT'))
-            date_string = dt_object.strftime('%Y-%m-%d')
-            retval[date_string] = val
+            if val != 0:
+                dt_object = datetime.fromtimestamp(ts, pytz.timezone('GMT'))
+                date_string = dt_object.strftime('%Y-%m-%d')
+                retval[date_string] = val
             
         # print(retval)
         return retval
