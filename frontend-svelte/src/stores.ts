@@ -19,7 +19,7 @@ function calcTotal(data: { [key: string]: PanelData }) {
             }
         }
         for (const output of xy.y) {
-            total += output;
+            total += +output;
         }
     }
     return total;
