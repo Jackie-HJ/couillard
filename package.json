@@ -1,5 +1,6 @@
 {
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^2.4.6"
+    "@sveltejs/vite-plugin-svelte": "^2.4.6",
+    "@types/plotly.js": "^2.12.30"
   }
 }
