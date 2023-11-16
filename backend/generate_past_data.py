@@ -84,7 +84,7 @@ def generate_auroravision_date(date):
     if (day < 10):
         day = '0' + str(day)
 
-    return str(date.year) + str(date.month) + str(day)
+    return str(date.year) + str(date.month).zfill(2) + str(day)
     
 if __name__ == '__main__':
     pvSystemId = ''

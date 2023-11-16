@@ -12,7 +12,7 @@ import time, json
 chrome_options = Options()
 chrome_options.add_argument("--headless")  
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-x64/chromedriver')
+driver_service = Service('./chromedriver-mac-arm64/chromedriver')
 
 driver = webdriver.Chrome(service=driver_service, options=chrome_options)
 
