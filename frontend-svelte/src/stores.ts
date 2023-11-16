@@ -8,7 +8,7 @@ export const dbData = readable(getData());
 const LBS_CO2_PER_KWH = 1.52;
 const DOLLARS_SAVED_PER_KWH = 0.10;
 
-const TOTALS_PANEL_WHITELIST = ["Kelly Lane"];
+const TOTALS_PANEL_WHITELIST = null;
 
 function calcTotal(data: { [key: string]: PanelData }) {
     let total = 0;
