@@ -4,15 +4,16 @@
   import Plotly from 'plotly.js-dist';
 
   let container;
-  let currentData;
 
-  // Define your original data and modified data
+  // Define yourdata
   const kwhData = {
     x: [1, 2, 3, 4, 5],
     y: [1, 2, 4, 8, 16],
     name: 'kWh Produced',
     type: 'scatter',
-    mode: 'lines+markers'
+    mode: 'lines+markers',
+    line: { color: 'rgb(16, 58, 113)' }, // Couillard Blue
+    marker: { color: 'rgb(16, 58, 113)' }
   };
 
   const lbsCO2Data = {
@@ -20,7 +21,9 @@
     y: kwhData.y.map(y => y * 0.954),
     name: 'lbs CO2 Saved',
     type: 'scatter',
-    mode: 'lines+markers'
+    mode: 'lines+markers',
+    line: { color: 'rgb(247, 147, 30)' }, // Couillard Orange
+    marker: { color: 'rgb(247, 147, 30)' }
   };
 
   const dollarData = {
@@ -28,7 +31,9 @@
     y: kwhData.y.map(y => y * 0.14),
     name: 'Dollars Saved',
     type: 'scatter',
-    mode: 'lines+markers'
+    mode: 'lines+markers',
+    line: { color: 'black' },
+    marker: { color: 'black' }
   };
 
   const config = {
@@ -39,39 +44,45 @@
     scrollZoom: true,
   };
 
-  // Function to update the data and layout based on button clicked
-  function showData(selectedData) {
-    currentData = [...selectedData]; // Use spread operator to trigger reactivity
-    console.log(selectedData); // For debugging
-    let yAxisTitle = selectedData.length === 1 ? selectedData[0].name : "kWh Produced, lbs CO2 Saved, & Dollars Saved";
+  const layout = {
+    xaxis: { title: "Date" },
+    yaxis: { title: "", fixedrange: true},
+    title: "Solar Array Output",
+    dragmode: "pan"
+  };
 
-    const updatedLayout = {
-      xaxis: { title: "Date" },
-      yaxis: { title: yAxisTitle, fixedrange: true },
-      title: "Solar Array Output",
-      dragmode: "pan"
-    };
+  function updateGraph(data) {
+    // Update the Y-axis title based on the dataset
+    layout.yaxis.title = data.length === 1 ? data[0].name : "Various Metrics";
+    // @ts-ignore
+    Plotly.newPlot(container, data, layout, config);
+  }
 
-    //@ts-ignore
-    Plotly.purge(container);
-    //@ts-ignore
-    Plotly.newPlot(container, currentData, updatedLayout, config);
+  function showKwhData() {
+    updateGraph([kwhData]);
+  }
+
+  function showLbsCO2Data() {
+    updateGraph([lbsCO2Data]);
+  }
+
+  function showDollarData() {
+    updateGraph([dollarData]);
   }
 
   function resetGraph() {
-    showData([kwhData, lbsCO2Data, dollarData]);
+    updateGraph([kwhData, lbsCO2Data, dollarData]);
   }
 
   onMount(() => {
-    // Initially show all data
     resetGraph();
   });
 </script>
 
 <div bind:this={container}></div>
 <div class="buttons">
-  <button on:click={() => showData([kwhData])}>Show kWh Produced</button>
-  <button on:click={() => showData([lbsCO2Data])}>Show lbs CO2 Saved</button>
-  <button on:click={() => showData([dollarData])}>Show Dollars Saved</button>
-  <button on:click={() => resetGraph()}>Show All Data</button>
+  <button on:click={showKwhData}>Show kWh Produced</button>
+  <button on:click={showLbsCO2Data}>Show lbs CO2 Saved</button>
+  <button on:click={showDollarData}>Show Dollars Saved</button>
+  <button on:click={resetGraph}>Show All Data</button>
 </div>
