@@ -6,10 +6,9 @@
 
   let container;
   let selectedPanelName = null;
+  let selectedPanelDescription = "";
+  let selectedPanelUrl = "";
   let dbData= {};
-
-/*   $: dbDataStore.subscribe(value => { dbData = value; });
-  $: if (dbData) renderPlot(dbData); */
 
   async function renderPlot(dbData) {
     const data = [];
@@ -49,7 +48,7 @@
         "toImage",
         "pan2d",
       ],
-
+      
       displayModeBar: true,
       scrollZoom: true,
     };
@@ -60,26 +59,36 @@
   onMount(() => {
     dbDataStore.subscribe(async promise => {
       dbData = await promise;
-      console.log(dbData);
       renderPlot(dbData);
     });
   });
 
   function updatePanelSelection(event) {
     selectedPanelName = event.target.value;
-    //console.log(dbData);
+    if (selectedPanelName === "all") {
+      selectedPanelName = null; 
+      selectedPanelDescription="";
+      selectedPanelUrl="";
+    }
+    else {
+      selectedPanelDescription = dbData[selectedPanelName].desc;
+      selectedPanelUrl = dbData[selectedPanelName].url;
+    }
     renderPlot(dbData);
   }
 
 </script>
   
 <div id="description">
+  <p>Filter Panels:</p>
   <select on:change={updatePanelSelection}>
-    <option value="">Select a panel</option>
+    <option value="all">All Panels</option>
     {#each Object.keys(dbData || {}) as panelName}
       <option value="{panelName}">{panelName}</option>
     {/each}
   </select>
+  <p>{selectedPanelDescription}</p>
+  <p>{selectedPanelUrl}</p>
 </div>
 <div bind:this={container}></div>
 
@@ -99,5 +108,22 @@
 
   #description {
     padding: 15px;
+    text-align: center;
+  }
+
+  #description p {
+    margin: 0px;
+    padding: 5px;
+    font-size: 18px;
+    font-weight: bold;
+  }
+
+  #description select {
+    width: 50%; 
+    padding: 10px; 
+    font-size: 16px; 
+    cursor: pointer; 
+    border: 1px solid #ccc; 
+    border-radius: 4px; 
   }
 </style>
