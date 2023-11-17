@@ -105,6 +105,7 @@
     align-items: center;
     padding-top: 5px;
     padding-bottom: 20px;
+    color: black;
   }
 
   #description {
