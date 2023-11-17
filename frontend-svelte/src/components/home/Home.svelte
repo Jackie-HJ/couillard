@@ -109,8 +109,8 @@
 */
 
 .stats-row {
-  margin-top: 50px;
-  color: white;
+  margin-top: 0px;
+  color: var(--couillard-orange-color);
   font-weight: bold;
   font-size: x-large;
   background-color: var(--couillard-blue-color);
@@ -118,6 +118,7 @@
   padding: 20px;
   font-size: 24px;
 }
+
 
 .row-arrange {
   display: flex;
@@ -130,17 +131,21 @@
   text-align: center;
   border: 10px white;
   color: white;
+  padding: 0px;
 }
 
 .large {
   font-size: 4rem;
+  margin: 0%;
 }
 
 .medium {
   font-size: 2rem;
+  margin: 0%;
 }
 
 .small {
   font-size: 1rem;
+  margin: 0%;
 }
 </style>

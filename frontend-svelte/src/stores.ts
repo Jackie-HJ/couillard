@@ -1,16 +1,18 @@
-import { readable, derived } from 'svelte/store';
+import { readable, derived, writable, get } from 'svelte/store';
 
 import getData from './getData';
 import { type PanelData } from './getData';
 
 export const dbData = readable(getData());
 
+export const selectedPanelStore = writable(null);
+
 const LBS_CO2_PER_KWH = 1.52;
 const DOLLARS_SAVED_PER_KWH = 0.10;
 
 const TOTALS_PANEL_WHITELIST = null;
 
-function calcTotal(data: { [key: string]: PanelData }) {
+function calcTotal(data: { [key: string]: PanelData }, panelFilter: string) {
     let total = 0;
     for (const [panelName, xy] of Object.entries(data)) {
         if (TOTALS_PANEL_WHITELIST !== null) {
@@ -18,11 +20,19 @@ function calcTotal(data: { [key: string]: PanelData }) {
                 continue;
             }
         }
-        for (const output of xy.y) {
-            total += +output;
+        if(!panelFilter || panelFilter == panelName) {
+            for (const output of xy.y) {
+                total += +output;
+            }
         }
     }
     return total;
 }
 
-export const totalData = derived(dbData, promise => promise.then(calcTotal));
+//export const totalData = derived(dbData, promise => promise.then(data => calcTotal(data, get(selectedPanelStore))));
+export const totalData = derived(
+    [dbData, selectedPanelStore], 
+    async ([$dbData, $selectedPanelStore]) => {
+       return calcTotal(await $dbData, $selectedPanelStore);
+    }
+);
