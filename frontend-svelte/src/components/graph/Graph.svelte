@@ -3,17 +3,26 @@
   import Plotly, { getDataToPixel } from 'plotly.js-dist';
 
   import { dbData as dbDataStore } from '../../stores';
-    import App from '../../App.svelte';
 
   let container;
+  let selectedPanelName = null;
+  let dbData= {};
+
+/*   $: dbDataStore.subscribe(value => { dbData = value; });
+  $: if (dbData) renderPlot(dbData); */
 
   async function renderPlot(dbData) {
     const data = [];
     for (const [panelName, xy] of Object.entries(dbData)) {
-      data.push({
-        name: `${panelName} (kWh)`,
-        ...xy,
-      });
+      if (!selectedPanelName || panelName === selectedPanelName) 
+      {
+        //console.log(panelName);
+        data.push({
+          name: `${panelName} (kWh)`,
+          x: xy.x,
+          y: xy.y,
+        });
+      }
     }
 
     const layout = {
@@ -50,12 +59,30 @@
   
   onMount(() => {
     dbDataStore.subscribe(async promise => {
-      renderPlot(await promise);
+      dbData = await promise;
+      console.log(dbData);
+      renderPlot(dbData);
     });
   });
+
+  function updatePanelSelection(event) {
+    selectedPanelName = event.target.value;
+    //console.log(dbData);
+    renderPlot(dbData);
+  }
+
 </script>
   
+<div id="description">
+  <select on:change={updatePanelSelection}>
+    <option value="">Select a panel</option>
+    {#each Object.keys(dbData || {}) as panelName}
+      <option value="{panelName}">{panelName}</option>
+    {/each}
+  </select>
+</div>
 <div bind:this={container}></div>
+
 <div id="explanations">
   To zoom into graph, scroll outwards. To zoom in, scroll inwards.<br>
   Click on legend to toggle which solar data sources are shown.
@@ -68,5 +95,9 @@
     align-items: center;
     padding-top: 5px;
     padding-bottom: 20px;
+  }
+
+  #description {
+    padding: 15px;
   }
 </style>

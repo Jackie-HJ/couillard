@@ -5,6 +5,9 @@ import { type PanelData } from './getData';
 
 export const dbData = readable(getData());
 
+import { writable } from 'svelte/store';
+export const selectedPanel = writable({ name: null, description: null });
+
 const LBS_CO2_PER_KWH = 1.52;
 const DOLLARS_SAVED_PER_KWH = 0.10;
 

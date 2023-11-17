@@ -21,6 +21,8 @@ const DATE_PATTERNS = {
 export interface PanelData {
     readonly x: readonly Date[];
     readonly y: readonly number[];
+    readonly desc: string;
+    readonly url: string;
 }
 
 export default async function getData(): Promise<{ [key: string]: PanelData }> {
@@ -93,6 +95,8 @@ async function assemblePanelDataObjects(
     let panelDataObjs: { [key: string]: PanelData } = Object.create(null);
     await asyncForEach(await getDocs(col), (async panelDoc => {
         let panelName = panelDoc.get("name");
+        let desc = panelDoc.get("desc");
+        let url = panelDoc.get("url");
         let outputCol = collection(panelDoc.ref, "Output");
         let unsortedYears = Object.create(null);
         await asyncForEach(await getDocs(outputCol), (async outputDoc => {
@@ -128,6 +132,8 @@ async function assemblePanelDataObjects(
         panelDataObjs[panelName] = {
             x: dates,
             y: outputs,
+            desc: desc,
+            url: url,
         } as const;
     }));
     return panelDataObjs;
