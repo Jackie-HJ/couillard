@@ -20,15 +20,10 @@ function calcTotal(data: { [key: string]: PanelData }, panelFilter: string) {
                 continue;
             }
         }
-        if(panelName !== panelFilter && panelFilter !== null)
-        {
+        if(!panelFilter || panelFilter == panelName) {
             for (const output of xy.y) {
                 total += +output;
             }
-            break;
-        }
-        for (const output of xy.y) {
-            total += +output;
         }
     }
     return total;
@@ -37,7 +32,7 @@ function calcTotal(data: { [key: string]: PanelData }, panelFilter: string) {
 //export const totalData = derived(dbData, promise => promise.then(data => calcTotal(data, get(selectedPanelStore))));
 export const totalData = derived(
     [dbData, selectedPanelStore], 
-    ([$dbData, $selectedPanelStore]) => {
-        return $dbData.then(data => calcTotal(data, $selectedPanelStore));
+    async ([$dbData, $selectedPanelStore]) => {
+       return calcTotal(await $dbData, $selectedPanelStore);
     }
 );
