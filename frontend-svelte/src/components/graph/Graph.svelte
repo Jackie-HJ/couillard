@@ -2,7 +2,7 @@
   import { onMount } from 'svelte';
   import Plotly, { getDataToPixel } from 'plotly.js-dist';
 
-  import { dbData as dbDataStore } from '../../stores';
+  import { dbData as dbDataStore, selectedPanelStore } from '../../stores';
 
   let container;
   let selectedPanelName = null;
@@ -74,6 +74,7 @@
       selectedPanelDescription = dbData[selectedPanelName].desc;
       selectedPanelUrl = dbData[selectedPanelName].url;
     }
+    selectedPanelStore.set(selectedPanelName); // update store value
     renderPlot(dbData);
   }
 
