@@ -1,28 +1,106 @@
+<script>
+  import { onMount } from 'svelte';
+  import { totalData } from '../../stores';
+  import { TOTALS_DERIVATIONS, FORMATTING_LOCALE, CURRENCY } from '../../conversions';
+
+  let totals = 0;
+  onMount(() => {
+    totalData.subscribe(async promise => {
+      totals = await promise;
+    });
+  });
+
+  const SIG_CHARS = 5;
+  
+  const compactNumberFormatter = Intl.NumberFormat(FORMATTING_LOCALE, {
+    notation: 'compact',
+    maximumSignificantDigits: SIG_CHARS - 1,
+  });
+  const siNumberFormatter = Intl.NumberFormat(FORMATTING_LOCALE, {
+    notation: 'compact',
+    maximumSignificantDigits: SIG_CHARS,
+  })
+  const moneyFormatterNoDP = Intl.NumberFormat(FORMATTING_LOCALE, {
+    style: 'currency',
+    currency: CURRENCY,
+    maximumFractionDigits: 0,
+    minimumFractionDigits: 0,
+  });
+  const moneyFormatter = Intl.NumberFormat(FORMATTING_LOCALE, {
+    style: 'currency',
+    currency: CURRENCY,
+  });
+  const broke = moneyFormatter.format(0);
+  const currencySymbol = broke.replaceAll("0", "").replaceAll(".", "");
+  function pickSiPrefix(num, just) {
+    let everything = siNumberFormatter.format(num).replace("K", "k");
+    let prefixless = !(/[A-Za-z]$/.test(everything));
+    switch (just) {
+      case "prefix":
+        if (prefixless) return "";
+        return everything.slice(-1);
+      case "number":
+        if (prefixless) return everything;
+        return everything.slice(0, -1);
+      default:
+        console.warn("Returning undefined SI prefix, withOrWithout must be prefix or number.");
+    }
+  }
+  function fmtNum(num, unitType, currencyShowDP = false) {
+    switch (unitType) {
+      case "money":
+        return (
+          currencyShowDP ? moneyFormatter : moneyFormatterNoDP
+        ).format(num);
+      case "si":
+        return pickSiPrefix(num, "number");
+      case "simple":
+      default:
+        let result = compactNumberFormatter.format(num);
+        if (unitType !== "simple") {
+          console.warn(`Unknown unit type ${unitType}, defaulting to simple.`);
+        }
+        return result;
+    }
+  }
+  function fmtUnit(num, unit, unitType, shortForm = false) {
+    switch (unitType) {
+      case "money":
+        if (shortForm) return unit;
+        return `${currencySymbol} ${unit}`;
+      case "si":
+        let siPrefix = pickSiPrefix(num, "prefix");
+        return `${siPrefix}${unit}`;
+      case "simple":
+      default:
+        if (unitType !== "simple") {
+          console.warn(`Unknown unit type ${unitType}, defaulting to simple.`);
+        }
+        return unit;
+    }
+  }
+</script>
+
 <div class="stats-row">
     Solar panels have saved, to date:
   <div class="row-arrange">
-    <div class="statistic">
-        <p class="large">22.89K</p>
-        <p class="medium">$ Saved</p>
-        <p class="small">*based on $0.1 per kWh</p>
-    </div>
-  
-    <div class="statistic">
-      <p class="large">347.92K</p>
-      <p class="medium">lb CO2 Saved</p>
-      <p class="small">*based on 1.52lb CO2 per kWh</p>
-    </div>
-  
-    <div class="statistic">
-      <p class="large">228.89K</p>
-      <p class="medium">kWh Gen.</p>
-    </div>
-
+    {#each TOTALS_DERIVATIONS as [conv, unit, unitType, showDesc]}
+      <div class="statistic">
+          <p class="large">{fmtNum(conv * totals, unitType)}</p>
+          <p class="medium">{fmtUnit(conv * totals, unit, unitType)}</p>
+          {#if showDesc}
+            <p class="small">
+              *Based on {fmtNum(conv, unitType, true)}
+              {fmtUnit(conv, unit, unitType, true)} per kWh
+            </p>
+          {/if}
+      </div>
+    {/each}
   </div>
 </div>
 
 <style>
-  .info-title {
+.info-title {
   font-size: 36px;
   font-weight: bolder;
   color: black;
