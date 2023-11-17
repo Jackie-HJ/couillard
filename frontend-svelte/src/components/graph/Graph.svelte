@@ -3,6 +3,7 @@
   import Plotly, { getDataToPixel } from 'plotly.js-dist';
 
   import { dbData as dbDataStore } from '../../stores';
+    import App from '../../App.svelte';
 
   let container;
 
@@ -55,4 +56,17 @@
 </script>
   
 <div bind:this={container}></div>
-  
+<div id="explanations">
+  To zoom into graph, scroll outwards. To zoom in, scroll inwards.<br>
+  Click on legend to toggle which solar data sources are shown.
+</div>
+
+
+<style>
+  #explanations {
+    text-align: center;
+    align-items: center;
+    padding-top: 5px;
+    padding-bottom: 20px;
+  }
+</style>
