@@ -1,5 +1,5 @@
 <div class="stats-row">
-    Solar panels have saved, to date:
+  Solar panels have saved, to date:
   <div class="row-arrange">
     <div class="statistic">
         <p class="large">22.89K</p>
@@ -22,21 +22,20 @@
 </div>
 
 <style>
-  .info-title {
+  .stats-title {
   font-size: 36px;
   font-weight: bolder;
-  color: black;
+  color: var(--couillard-orange-color);
 }
 
-
 .stats-row {
-  margin-top: 50px;
-  color: white;
+  margin-top: 0px;
+  color: var(--couillard-orange-color);
   font-weight: bold;
-  font-size: x-large;
+  font-size:x-large;
   background-color: var(--couillard-blue-color);
   text-align: center;
-  padding: 20px;
+  padding-top: 20px;
   font-size: 24px;
 }
 
@@ -44,7 +43,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 20px;
+  padding: 0px;
 }
 
 .statistic {
@@ -59,5 +58,9 @@
 
 .medium {
   font-size: 1.5rem;
+}
+
+.small {
+  font-size: 1rem;
 }
 </style>

@@ -10,5 +10,6 @@
     background-color: var(--couillard-blue-color);
     color: var(--couillard-orange-color);
     padding: 24px;
+    font-size: large;
 }
 </style>

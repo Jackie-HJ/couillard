@@ -80,6 +80,10 @@
 </script>
 
 <div bind:this={container}></div>
+<div id="explanation">
+  To zoom into graph, scroll outwards. To zoom out, scroll inwards.
+  Click on legend to toggle which solar stations' data is displayed.
+</div>
 <div class="buttons">
   <button on:click={showKwhData}>Show kWh Produced</button>
   <button on:click={showLbsCO2Data}>Show lbs CO2 Saved</button>
