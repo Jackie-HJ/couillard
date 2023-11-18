@@ -5,10 +5,11 @@ import { type PanelData } from './getData';
 
 export const dbData = readable(getData());
 
+export const LBS_CO2_PER_KWH = 1.52;
+export const DOLLARS_SAVED_PER_KWH = 0.10;
+
 export const selectedPanelStore = writable(null);
 
-const LBS_CO2_PER_KWH = 1.52;
-const DOLLARS_SAVED_PER_KWH = 0.10;
 
 const TOTALS_PANEL_WHITELIST = null;
 

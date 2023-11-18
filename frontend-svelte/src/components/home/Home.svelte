@@ -101,13 +101,12 @@
 </div>
 
 <style>
-/* currently unused
-  .info-title {
-    font-size: 36px;
-    font-weight: bolder;
-    color: black;
-  }
-*/
+.info-title {
+  font-size: 36px;
+  font-weight: bolder;
+  color: black;
+}
+
 
 .stats-row {
   margin-top: 0px;

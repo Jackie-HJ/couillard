@@ -152,8 +152,9 @@ button {
   background-color: #f7931e;
   padding: 5px;
   text-align: center;
-  border-radius: 4px;
-  width: 100px;
+  border-radius: 10px;
+  width: auto;
+  max-width: 100%;
   color: white;
 }
 
