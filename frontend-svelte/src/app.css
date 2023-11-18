@@ -16,7 +16,11 @@
 
   /* Couillard colors */
   --couillard-blue-color: rgb(16, 58, 113);
-  --couillard-orange-color: rgb(247, 147, 30);
+  --couillard-orange-color: #d85d15;
+  /* 
+  The above orange is from CSF's website, it is darker than the one they gave us and more useful for buttons
+  The one CSF gave us (the one in their logo) is rgb(247, 147, 30) 
+  */
 }
 
 /*

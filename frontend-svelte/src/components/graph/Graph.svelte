@@ -27,7 +27,7 @@
     const layout = {
       xaxis: {
         title: "Date",
-        //range: [new Date(new Date().getTime() - 15768000), new Date()]   - last 6 months, can use this once we have data with dates
+        range: [new Date(new Date().getTime() - 1000 * 60 * 60 * 24 * 30 * 6), new Date()] // last 6 months (roughly)
       },
       yaxis: {
         title: "Energy (kWh)",
@@ -123,11 +123,11 @@
   }
 
   #description select {
-    width: 50%; 
     padding: 10px; 
     font-size: 16px; 
     cursor: pointer; 
-    border: 1px solid #ccc; 
+    border: none;
     border-radius: 4px; 
+    background-color: var(--couillard-orange-color);
   }
 </style>

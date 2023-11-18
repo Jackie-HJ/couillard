@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: center;
     background-color: var(--couillard-blue-color);
-    color: var(--couillard-orange-color);
+    color: white;
     padding: 15px;
     font-size: larger;
 }

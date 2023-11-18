@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { totalData } from '../../stores';
+  import { totalData, selectedPanelStore } from '../../stores';
   import { TOTALS_DERIVATIONS, FORMATTING_LOCALE, CURRENCY } from '../../conversions';
 
   let totals = 0;
@@ -82,7 +82,7 @@
 </script>
 
 <div class="stats-row">
-    Solar panels have saved, to date:
+    Since we started tracking, {$selectedPanelStore ? `the ${$selectedPanelStore} array has` : "solar arrays in Deerfield have"} saved:
   <div class="row-arrange">
     {#each TOTALS_DERIVATIONS as [conv, unit, unitType, showDesc]}
       <div class="statistic">
@@ -97,6 +97,7 @@
       </div>
     {/each}
   </div>
+  <p class="tiny">*many of our arrays have been operational for much longer than the data reflects, so these numbers are <b>underestimates</b> by a large margin!</p>
 </div>
 
 <style>
@@ -110,8 +111,7 @@
 
 .stats-row {
   margin-top: 0px;
-  color: var(--couillard-orange-color);
-  font-weight: bold;
+  color: white;
   font-size: x-large;
   background-color: var(--couillard-blue-color);
   text-align: center;
@@ -132,11 +132,13 @@
   border: 10px white;
   color: white;
   padding: 0px;
+  font-weight: bold;
 }
 
 .large {
   font-size: 4rem;
   margin: 0%;
+  font-weight: bold;
 }
 
 .medium {
@@ -148,4 +150,10 @@
   font-size: 1rem;
   margin: 0%;
 }
+
+.tiny {
+  font-size: 0.7rem;
+  margin: 0%;
+}
+
 </style>
