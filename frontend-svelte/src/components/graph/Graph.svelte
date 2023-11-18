@@ -96,6 +96,7 @@
 <div id="explanations">
   To zoom out, scroll down with your cursor over the graph. To zoom in, scroll up.<br>
   You can also use the buttons in the top right, above the legend, to zoom in/out and reset.<br>
+  Click, hold and drag to pan sideways on the graph.<br>
   Click on an array in the legend to toggle that line off/on.
 </div>
 
