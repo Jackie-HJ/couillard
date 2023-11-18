@@ -8,7 +8,8 @@
     align-items: center;
     justify-content: center;
     background-color: var(--couillard-blue-color);
-    color: var(--couillard-orange-color);
-    padding: 24px;
+    color: white;
+    padding: 15px;
+    font-size: larger;
 }
 </style>
