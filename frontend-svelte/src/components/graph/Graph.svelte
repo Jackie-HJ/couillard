@@ -94,8 +94,9 @@
 <div bind:this={container}></div>
 
 <div id="explanations">
-  To zoom into graph, scroll outwards. To zoom in, scroll inwards.<br>
-  Click on legend to toggle which solar data sources are shown.
+  To zoom out, scroll down with your cursor over the graph. To zoom in, scroll up.<br>
+  You can also use the buttons in the top right, above the legend, to zoom in/out and reset.
+  Click on an array in the legend to toggle that line off/on.
 </div>
 
 
