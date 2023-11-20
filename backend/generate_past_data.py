@@ -1,14 +1,10 @@
 from firebase_admin import initialize_app, firestore
 import os
-from faker import Faker
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from datetime import timedelta
 from scripts import get_month_data, get_cookie_fronius
 from auroravision import get_month_data_auroravision, get_cookie_auroravision
 import pathlib
-
-fake = Faker()
 
 os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(
     pathlib.Path().resolve()) + "/cred.json"
@@ -17,7 +13,6 @@ db = firestore.client(app)
 
 start_date_fronius = datetime(2020, 6, 1)
 start_date_auroravision = datetime(2022, 12, 1)
-current_date = datetime.now()
 
 top_level_collection = 'Solar Arrays'
 
@@ -44,7 +39,7 @@ def populate_past_data_fronius(start_date, current_date, pvSystemId, document):
         populate_month(month_data, running_date.year, document)
         running_date += relativedelta(months=1)
         
-def populate_past_data_auroravision(eids, start_date, end_date, cookie, document):
+def populate_past_data_auroravision(eids, start_date, current_date, cookie, document):
     running_date = start_date
     while running_date <= current_date:
         # to avoid complications with the year
@@ -59,10 +54,8 @@ def populate_past_data_auroravision(eids, start_date, end_date, cookie, document
         
         running_date += relativedelta(days=30)
 
-def generate_auroravision_date(date):
-    return str(date.year) + str(date.month).zfill(2) + str(date.day).zfill(2)
-    
-if __name__ == '__main__':
+def populate_past_data(start_date_fronius, start_date_auroravision):
+    current_date = datetime.now()
     get_cookie_fronius()
     documents = db.collection(top_level_collection).stream()
     for document in documents:
@@ -73,4 +66,11 @@ if __name__ == '__main__':
             eids = document.to_dict()["entityId"]
             auroravision_cookie = get_cookie_auroravision(eids)
             populate_past_data_auroravision(eids, start_date_auroravision, current_date, auroravision_cookie, document)
+    
+def generate_auroravision_date(date):
+    return str(date.year) + str(date.month).zfill(2) + str(date.day).zfill(2)
+    
+if __name__ == '__main__':
+    populate_past_data(start_date_fronius, start_date_auroravision)
+
             
