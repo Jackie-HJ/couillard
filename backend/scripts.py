@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 import requests
 from datetime import datetime, timedelta
 import pytz
@@ -10,8 +9,12 @@ import time, json
 
 # Set up Chrome options
 chrome_options = Options()
-chrome_options.add_argument("--headless")  
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-setuid-sandbox")
 # driver_service = Service('./chromedriver-mac-x64/chromedriver')
 
 driver = webdriver.Chrome(options=chrome_options)
