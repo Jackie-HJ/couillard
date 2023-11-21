@@ -73,14 +73,17 @@
     renderPlot(dbData, "Dollars Saved", DOLLARS_SAVED_PER_KWH);
   }
 
+  let isLoading = true;
   onMount(() => {
     dbDataStore.subscribe(async promise => {
       dbData = await promise;
       showKwhData();
+      isLoading = false;
     });
   });
 
   function updatePanelSelection(event) {
+    isLoading = true;
     selectedPanelName = event.target.value;
     if (selectedPanelName === "all") {
       selectedPanelName = null; 
@@ -98,8 +101,12 @@
   }
 
 </script>
-  
+
 <section>
+  <div bind:this={container}></div>
+</section>
+
+<section style:display={isLoading ? 'none' : 'block'}>
   <div id="description">
     <p>Filter Panels:</p>
     <select on:change={updatePanelSelection}>
@@ -125,9 +132,7 @@
       <button on:click={showDollarData}>Dollars</button>
     </div>
   </div>
-  
-  <div bind:this={container}></div>
-  
+    
   <div id="explanations">
     To zoom out, scroll down with your cursor over the graph. To zoom in, scroll up.<br>
     You can also use the buttons in the top right, above the legend, to zoom in/out and reset.<br>
