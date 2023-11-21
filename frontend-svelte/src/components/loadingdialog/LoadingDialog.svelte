@@ -41,6 +41,7 @@
 dialog {
     --dialog-color: black;
     overflow: hidden;
+    border: none;
 }
 
 .dialog_inner {
@@ -52,11 +53,6 @@ dialog {
 
 .dialog_text {
     color: white;
-}
-
-dialog::backdrop {
-  background-color: black;
-  opacity: 0.2;
 }
 
 dialog::after {
