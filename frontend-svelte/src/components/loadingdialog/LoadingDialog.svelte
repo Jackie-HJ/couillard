@@ -1,11 +1,11 @@
 <script>
     import { onMount } from 'svelte';
-    import { dbData } from '../../stores';
+    import { totalData } from '../../stores';
 
     let isLoading = true;
     onMount(() => {
 
-        dbData.subscribe(async x => {
+        totalData.subscribe(async x => {
             await x;
             isLoading = false;
         });
@@ -33,10 +33,11 @@
     }
 
     import { fade } from 'svelte/transition';
+    import { ANIMATE_OUT_LOADING_TIME } from "../../animationTimings"
 </script>
 
 {#if isLoading}
-    <dialog class="dialog_inner" use:showImmediately out:fade={{ duration: 500 }}>
+    <dialog class="dialog_inner" use:showImmediately out:fade={{ duration: ANIMATE_OUT_LOADING_TIME }}>
         <div class="dialog_flex">
             <span class="dialog_text">Loading panel data...</span>
         </div>
