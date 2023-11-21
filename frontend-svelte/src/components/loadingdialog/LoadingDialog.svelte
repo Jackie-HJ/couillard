@@ -64,15 +64,15 @@ dialog::after {
   left: -50%;
   background: linear-gradient(
     to bottom,
-    var(--dialog-color),
-    rgba(255,255,255,0.5) 50%,
-    var(--dialog-color)
+    rgb(0, 0, 0, 0),
+    rgba(255,255,255,0.3) 50%,
+    rgba(0, 0, 0, 0)
   );
   transform: rotateZ(60deg) translate(-5em, 7.5em);
 }
 
 dialog::before, dialog::after {
-    animation: sheen 0.4s forwards;
+    animation: sheen 0.5s forwards;
 }
 
 @keyframes sheen {
