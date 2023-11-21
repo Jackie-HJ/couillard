@@ -83,7 +83,6 @@
   });
 
   function updatePanelSelection(event) {
-    isLoading = true;
     selectedPanelName = event.target.value;
     if (selectedPanelName === "all") {
       selectedPanelName = null; 
