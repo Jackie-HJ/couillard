@@ -65,10 +65,10 @@ dialog::after {
   background: linear-gradient(
     to bottom,
     rgb(0, 0, 0, 0),
-    rgba(255,255,255,0.3) 50%,
+    rgba(255,255,255,0.5) 50%,
     rgba(0, 0, 0, 0)
   );
-  transform: rotateZ(60deg) translate(-5em, 7.5em);
+  transform: rotateZ(-60deg) translate(1em, -9em);
 }
 
 dialog::before, dialog::after {
@@ -77,7 +77,7 @@ dialog::before, dialog::after {
 
 @keyframes sheen {
   100% {
-    transform: rotateZ(60deg) translate(1em, -9em);
+    transform: rotateZ(-60deg) translate(-5em, 7.5em);
   }
 }
 
