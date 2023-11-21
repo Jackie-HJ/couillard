@@ -1,0 +1,30 @@
+name: Update Daily Data
+
+on:
+  schedule:
+    - cron: '*/5 * * * *' # schedule the job to run every 5 minutes
+
+jobs:
+  update-daily-data:
+    environment: Couillard
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Pull Docker Image
+        run: |
+          docker pull ghcr.io/dssd-madison/couillard:latest
+
+      - name: Create Secrets File
+        run: |
+          echo '${{ secrets.FIREBASE_CREDS }}' > cred.json
+
+      - name: Run Docker Image
+        run: |
+          docker run -v $(pwd)/cred.json:/home/seluser/cred.json ghcr.io/dssd-madison/couillard:latest

@@ -29,6 +29,8 @@ def populate_month(month_data, year, document):
         'Output': month_data
     }
 
+    print(month_data)
+
     year_doc_ref.set(data_to_merge, merge=True)
 
 

@@ -50,7 +50,6 @@ def get_cookie_fronius():
 
 def get_month_data(month, year, id):
     url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=" + id + "&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
-    # print(url2 + "\n")
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Accept-Language': 'en-US,en;q=0.9',
@@ -73,7 +72,6 @@ def get_month_data(month, year, id):
     data = None
 
     if response.status_code == 200:
-        # print(response.text + "\n")
         data = json.loads(response.text)['settings']['series']
         if data != []:
             data = data[0]['data']
