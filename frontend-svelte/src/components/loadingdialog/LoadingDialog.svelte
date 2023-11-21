@@ -26,11 +26,11 @@
         domnode.showModal();
     }
 
-    let opacity = 0.8;
+    import { fade } from 'svelte/transition';
 </script>
 
 {#if isLoading}
-    <dialog class="dialog_inner" use:showImmediately>
+    <dialog class="dialog_inner" use:showImmediately out:fade={{ duration: 500 }}>
         <div class="dialog_flex">
             <span class="dialog_text">Loading panel data...</span>
         </div>
@@ -53,6 +53,10 @@ dialog {
 
 .dialog_text {
     color: white;
+}
+
+dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0);
 }
 
 dialog::after {
