@@ -22,6 +22,12 @@
     // Constantly wondering why on earth they don't create a backdrop
     // for an open-by-default modal. 
     // Forever wandering in circles in our own minds....
+    // Wait why do we even need a backdrop? Well it turns out that the
+    // default one is to slightly dim the rest of the page, but backdrops
+    // in most browsers can't be animated. This means that if we animate
+    // the dialog out, the backdrop will suddenly just yeet itself away. 
+    // This looks like crap, so we supply our own backdrop which is just
+    // actually transparent and therefore invisible. 
     function showImmediately(domnode) {
         domnode.showModal();
     }
