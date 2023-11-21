@@ -6,5 +6,4 @@ RUN python3 -m pip install --no-cache-dir -r requirements.txt
 USER seluser
 WORKDIR /home/seluser
 COPY . .
-CMD ["--selenium-manager", "true"]
-# CMD ["python3", "generate_daily_data.py"]
+CMD ["python3", "generate_daily_data.py"]
