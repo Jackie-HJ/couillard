@@ -6,16 +6,20 @@
   import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH } from '../../stores';
 
   let container;
-  let selectedPanelName = null;
   let selectedPanelDescription = "";
   let selectedPanelUrl = "";
   let selectedPanelImageUrl = "";
   let dbData= {};
 
+  let selectedPanelName = "all";
+  panelNameStore.subscribe(x => {
+    selectedPanelName = x;
+  });
+
   async function renderPlot(dbData, unit, multiplier) {
     const data = [];
     for (const [panelName, xy] of Object.entries(dbData)) {
-      if (!selectedPanelName || panelName === selectedPanelName) {
+      if ((selectedPanelName === "all") || panelName === selectedPanelName) {
         //console.log(panelName);
         data.push({
           name: panelName,
