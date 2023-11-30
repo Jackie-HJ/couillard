@@ -1,10 +1,10 @@
 export const TOTALS_DERIVATIONS: [
-    number, string, "simple" | "money" | "si", boolean
+    number, string, "expanded" | "simple" | "money" | "si", string, boolean
 ][] = [
-    // conversion factor, unit, unit type, show description,
-    [ 0.10, "Saved",         "money",  true  ],
-    [ 1.52, "lbs CO2 Saved", "simple", true  ],
-    [ 1000, "Wh Generated",  "si",     false ],
+    // conversion factor, unit, unit type, suffix (i.e. "Saved"), show description,
+    [ 0.10, "",             "money",    "Saved",     true  ],
+    [ 1.52, "lbs CO2",      "expanded", "Saved",     true  ],
+    [ 1000, "Wh",           "si",       "Generated", false ],
 ];
 
 export const FORMATTING_LOCALE: string = "en-US";

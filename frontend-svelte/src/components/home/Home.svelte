@@ -46,14 +46,16 @@
         console.warn("Returning undefined SI prefix, withOrWithout must be prefix or number.");
     }
   }
-  function fmtNum(num, unitType, currencyShowDP = false) {
+  function fmtNum(num, unitType, forceHigherPrecision = false) {
     switch (unitType) {
       case "money":
         return (
-          currencyShowDP ? moneyFormatter : moneyFormatterNoDP
+          forceHigherPrecision ? moneyFormatter : moneyFormatterNoDP
         ).format(num);
       case "si":
         return pickSiPrefix(num, "number");
+      case "expanded":
+        return forceHigherPrecision ? num.toLocaleString() : Math.floor(num).toLocaleString();
       case "simple":
       default:
         let result = compactNumberFormatter.format(num);
@@ -66,8 +68,8 @@
   function fmtUnit(num, unit, unitType, shortForm = false) {
     switch (unitType) {
       case "money":
-        if (shortForm) return unit;
-        return `${currencySymbol} ${unit}`;
+        if (shortForm) return "";
+        return unit;
       case "si":
         let siPrefix = pickSiPrefix(num, "prefix");
         return `${siPrefix}${unit}`;
@@ -82,16 +84,22 @@
 </script>
 
 <div class="stats-row">
-    Since we started tracking, {$selectedPanelStore ? `the ${$selectedPanelStore} array has` : "solar arrays in Deerfield have"} saved:
+    Since we started tracking {$selectedPanelStore ? `the ${$selectedPanelStore} Array` : "solar arrays in Deerfield"}...
   <div class="row-arrange">
-    {#each TOTALS_DERIVATIONS as [conv, unit, unitType, showDesc]}
+    {#each TOTALS_DERIVATIONS as [conv, unit, unitType, unitSuffix, showDesc]}
       <div class="statistic">
           <p class="large">{fmtNum(conv * totals, unitType)}</p>
-          <p class="medium">{fmtUnit(conv * totals, unit, unitType)}</p>
+          <p class="medium statistic-detail">
+            {#if unit === "" && unitSuffix === ""}
+              <div class="invisible-placeholder">X</div>
+            {:else}
+              {fmtUnit(conv * totals, unit, unitType)} {unitSuffix}
+            {/if}
+          </p>
           {#if showDesc}
-            <p class="small">
+            <p class="small statistic-detail">
               *Based on {fmtNum(conv, unitType, true)}
-              {fmtUnit(conv, unit, unitType, true)} per kWh
+              {fmtUnit(conv, unit, unitType, true)} {unitSuffix.toLowerCase()} per kWh
             </p>
           {/if}
       </div>
@@ -118,6 +126,9 @@
   font-size: 24px;
 }
 
+.invisible-placeholder {
+  visibility: hidden;
+}
 
 .row-arrange {
   display: flex;
@@ -132,6 +143,9 @@
   color: white;
   padding: 0px;
   font-weight: bold;
+}
+
+.statistic-detail {
 }
 
 .large {
