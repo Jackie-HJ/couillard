@@ -105,13 +105,17 @@
 
 </script>
 
+<section>
+  <div bind:this={container}></div>
+</section>
+
 <section style:display={isLoading ? 'none' : 'block'}>
   <div id="description">
     {#if selectedPanelDescription}
       <p>{selectedPanelDescription}</p>
     {/if}
     {#if selectedPanelImageUrl}
-    <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
+      <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
     {/if}
   </div>
   
@@ -123,9 +127,7 @@
       <button on:click={showDollarData}>Dollars</button>
     </div>
   </div>
-</section>
-  
-<section>
+    
   <div id="explanations">
     <p>
       <strong>To zoom,</strong> scroll up or down, or use the buttons in the upper-right.
@@ -133,15 +135,15 @@
       <strong>To select specific panels,</strong> click on their entries in the legend.
     </p>
   </div>
-  <div class="graph-wrapper">
-    <div bind:this={container}></div>
-  </div>
+  
   {#if selectedPanelUrl}
     <a href={selectedPanelUrl}>
       <button>More Details</button>
     </a>
   {/if}
 </section>
+
+
 
 <style>
 
@@ -154,7 +156,6 @@
     align-items: center;
     padding-top: 5px;
     padding-bottom: 20px;
-    transform: translateY(61px);
   }
 
   #description {
