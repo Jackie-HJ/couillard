@@ -145,9 +145,6 @@
   font-weight: bold;
 }
 
-.statistic-detail {
-}
-
 .large {
   font-size: 4rem;
   margin: 0%;
