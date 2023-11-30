@@ -102,48 +102,54 @@
   }
 
   panelNameStore.subscribe(updatePanelSelection);
-
+  
 </script>
 
-<section>
-  <div bind:this={container}></div>
-</section>
-
 <section style:display={isLoading ? 'none' : 'block'}>
-  <div id="description">
+  <div class="description">
     {#if selectedPanelDescription}
       <p>{selectedPanelDescription}</p>
     {/if}
+  </div>
+</section>
+
+<section>
+  <div class="graph-auxillary-box">
+    <div class="unit-changer graph-aux">
+      Change Units of Graph:
+      <div class="buttons">
+        <button on:click={showKwhData}>kWh</button>
+        <button on:click={showLbsCO2Data}>lbs CO2</button>
+        <button on:click={showDollarData}>Dollars</button>
+      </div>
+    </div>
+      
+    <div class="explanations graph-aux">
+      <p>
+        <strong>To zoom,</strong> scroll up or down.
+        <strong>To pan,</strong> click and drag.<br>
+        <strong>To select specific panels,</strong> click on their entries in the legend.
+      </p>
+    </div>
+  
+    <div class="more-details graph-aux">
+      {#if selectedPanelUrl}
+        <a href={selectedPanelUrl}>
+          <button>More Details</button>
+        </a>
+      {/if}
+    </div>
+  </div>
+  <div bind:this={container}></div>
+</section>
+
+<section>
+  <div class="description">
     {#if selectedPanelImageUrl}
       <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
     {/if}
   </div>
-  
-  <div>
-    Change Units of Graph:
-    <div class="buttons">
-      <button on:click={showKwhData}>kWh</button>
-      <button on:click={showLbsCO2Data}>lbs CO2</button>
-      <button on:click={showDollarData}>Dollars</button>
-    </div>
-  </div>
-    
-  <div id="explanations">
-    <p>
-      <strong>To zoom,</strong> scroll up or down, or use the buttons in the upper-right.
-      <strong>To pan,</strong> click and drag.
-      <strong>To select specific panels,</strong> click on their entries in the legend.
-    </p>
-  </div>
-  
-  {#if selectedPanelUrl}
-    <a href={selectedPanelUrl}>
-      <button>More Details</button>
-    </a>
-  {/if}
 </section>
-
-
 
 <style>
 
@@ -151,19 +157,30 @@
     color: var(--couillard-blue-color);
   }
 
-  #explanations {
-    text-align: center;
+  .graph-auxillary-box {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-items: center;
-    padding-top: 5px;
-    padding-bottom: 20px;
   }
 
-  #description {
-    padding: 15px;
+  .graph-aux {
+    margin: 26px; /* This is what Plotly uses, this way it lines up */
+    margin-bottom: 0;
+  }
+
+  .unit-changer {
+    margin-right: auto;
+  }
+
+  .more-details {
+    margin-left: auto;
+  }
+
+  .description {
     text-align: center;
   }
 
-  #description p {
+  .description p {
     margin: 0px;
     padding: 5px;
     font-size: 18px;
@@ -173,7 +190,6 @@
   a {
     color: var(--couillard-blue-color);
     text-decoration: underline;
-    margin: 0.5rem;
   }
 
 </style>
