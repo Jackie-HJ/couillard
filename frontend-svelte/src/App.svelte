@@ -5,18 +5,17 @@
   import Graph from "./components/graph/Graph.svelte"
   import LoadingDialog from "./components/loadingdialog/LoadingDialog.svelte"
 
-  import { totalData } from "./stores"
-  import { ANIMATE_OUT_LOADING_TIME } from "./animationTimings"
+  import { totalData, readyToAnimate } from "./stores"
+  import { ANIMATE_OUT_LOADING_TIME, ANIMATE_DURATION } from "./animationTimings"
 
 
   import { onMount } from "svelte";
   import { fly } from "svelte/transition";
 
-  let isLoading = true;
+  let notReadyYet = true;
   onMount(() => {
-    totalData.subscribe(async x => {
-      await x;
-      isLoading = false;
+    readyToAnimate.subscribe(x => {
+      if (x) notReadyYet = false;
     })
   });
   
@@ -26,6 +25,7 @@
 
   const flyOptions = {
     y: 200,
+    duration: ANIMATE_DURATION,
   };
   const flyOptionsFirst = {
     ...flyOptions,
@@ -36,17 +36,17 @@
 <main>
   <LoadingDialog />
   <Nav />
-  {#if !isLoading}
+  {#if !notReadyYet}
     <div in:fly={flyOptionsFirst} on:introend={() => { homeInPlace = true; }}>
       <Home />
     </div>
   {/if}
-  {#if !isLoading && homeInPlace}
+  {#if !notReadyYet && homeInPlace}
     <div in:fly={flyOptions} on:introend={() => { graphInPlace = true; }}>
       <Graph />
     </div>
   {/if}
-  {#if !isLoading && graphInPlace}
+  {#if !notReadyYet && graphInPlace}
     <div in:fly={flyOptions} on:introend={() => { footerInPlace = true; }}>
       <Footer />
     </div>
