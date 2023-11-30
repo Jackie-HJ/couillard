@@ -73,10 +73,9 @@
         return `${siPrefix}${unit}`;
       case "simple":
       case "expanded":
+        return unit;
       default:
-        if (unitType !== "simple") {
-          console.warn(`Unknown unit type ${unitType}, defaulting to simple.`);
-        }
+        console.warn(`Unknown unit type ${unitType}, defaulting to simple.`);
         return unit;
     }
   }
