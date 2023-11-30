@@ -30,8 +30,6 @@
     style: 'currency',
     currency: CURRENCY,
   });
-  const broke = moneyFormatter.format(0);
-  const currencySymbol = broke.replaceAll("0", "").replaceAll(".", "");
   function pickSiPrefix(num, just) {
     let everything = siNumberFormatter.format(num).replace("K", "k");
     let prefixless = !(/[A-Za-z]$/.test(everything));
