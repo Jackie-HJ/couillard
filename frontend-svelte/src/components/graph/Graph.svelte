@@ -105,8 +105,8 @@
 
 </script>
 
-<section style:display={isLoading ? 'none' : 'block'}>
-  <div id="description">
+<section>
+  <div id="description" style:display={isLoading ? 'none' : 'block'}>
     {#if selectedPanelDescription}
       <p>{selectedPanelDescription}</p>
     {/if}
@@ -114,18 +114,16 @@
     <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
     {/if}
   </div>
-  
-  <div>
-    Change Units of Graph:
-    <div class="buttons">
-      <button on:click={showKwhData}>kWh</button>
-      <button on:click={showLbsCO2Data}>lbs CO2</button>
-      <button on:click={showDollarData}>Dollars</button>
+  <div id="unit-changer">
+    <div>
+      Change Units of Graph:
+      <div class="buttons">
+        <button on:click={showKwhData}>kWh</button>
+        <button on:click={showLbsCO2Data}>lbs CO2</button>
+        <button on:click={showDollarData}>Dollars</button>
+      </div>
     </div>
   </div>
-</section>
-  
-<section>
   <div id="explanations">
     <p>
       <strong>To zoom,</strong> scroll up or down, or use the buttons in the upper-right.
@@ -152,9 +150,7 @@
   #explanations {
     text-align: center;
     align-items: center;
-    padding-top: 5px;
-    padding-bottom: 20px;
-    transform: translateY(61px);
+    transform: translateY(45px);
   }
 
   #description {
