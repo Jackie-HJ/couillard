@@ -101,11 +101,11 @@
 </div>
 
 <style>
-.info-title {
+/* UNUSED .info-title {
   font-size: 36px;
   font-weight: bolder;
   color: black;
-}
+} */
 
 
 .stats-row {
@@ -123,7 +123,7 @@
   display: flex;
   flex-direction: row;
   justify-content: space-around;
-  padding: 20px;
+  padding: 80px;
 }
 
 .statistic {
