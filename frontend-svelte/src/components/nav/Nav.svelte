@@ -1,13 +1,16 @@
+<script>
+    import FilterDropdown from "./FilterDropdown.svelte";
+
+</script>
 <div class="header">
     <div class="width-define">
-        <div class="link-row">
+        <div class="link-row flex-wrapper-header">
             <div class="logo">
                 <img id="logo" src="logo.jpg" width="80" alt="Logo">
                 <p class="logo">Deerfield Solar Analytics</p>
             </div>
-
+            <FilterDropdown />
         </div>
-        
     </div>
 </div>
 
@@ -22,7 +25,9 @@
     justify-content: center;
 }
 
-
+.flex-wrapper-header {
+    justify-content: space-between;
+}
 
 .logo {
     display: flex;

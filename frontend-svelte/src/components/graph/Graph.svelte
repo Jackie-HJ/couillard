@@ -3,7 +3,7 @@
   // @ts-ignore
   import Plotly from 'plotly.js-dist';
 
-  import { dbData as dbDataStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH, selectedPanelStore } from '../../stores';
+  import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH } from '../../stores';
 
   let container;
   let selectedPanelName = null;
@@ -82,8 +82,7 @@
     });
   });
 
-  function updatePanelSelection(event) {
-    selectedPanelName = event.target.value;
+  function updatePanelSelection(selectedPanelName) {
     if (selectedPanelName === "all") {
       selectedPanelName = null; 
       selectedPanelDescription="";
@@ -95,9 +94,10 @@
       selectedPanelUrl = dbData[selectedPanelName].url;
       selectedPanelImageUrl = dbData[selectedPanelName].image_url || "";
     }
-    selectedPanelStore.set(selectedPanelName); // update store value
     showKwhData();
   }
+
+  panelNameStore.subscribe(updatePanelSelection);
 
 </script>
 
@@ -107,20 +107,12 @@
 
 <section style:display={isLoading ? 'none' : 'block'}>
   <div id="description">
-    <p>Filter Panels:</p>
-    <select on:change={updatePanelSelection}>
-      <option value="all">All Panels</option>
-      {#each Object.keys(dbData || {}) as panelName}
-        <option value="{panelName}">{panelName}</option>
-      {/each}
-    </select>
     {#if selectedPanelDescription}
       <p>{selectedPanelDescription}</p>
     {/if}
     {#if selectedPanelImageUrl}
       <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
     {/if}
-  
   </div>
   
   <div>
@@ -172,15 +164,6 @@
     padding: 5px;
     font-size: 18px;
     font-weight: bold;
-  }
-
-  #description select {
-    padding: 10px; 
-    font-size: 16px; 
-    cursor: pointer; 
-    border: none;
-    border-radius: 4px; 
-    background-color: var(--couillard-orange-color);
   }
 
   a {

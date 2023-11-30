@@ -1,6 +1,6 @@
 <script>
   import { onMount } from 'svelte';
-  import { totalData, selectedPanelStore } from '../../stores';
+  import { totalData, panelName } from '../../stores';
   import { TOTALS_DERIVATIONS, FORMATTING_LOCALE, CURRENCY } from '../../conversions';
 
   let totals = 0;
@@ -72,6 +72,7 @@
         let siPrefix = pickSiPrefix(num, "prefix");
         return `${siPrefix}${unit}`;
       case "simple":
+      case "expanded":
       default:
         if (unitType !== "simple") {
           console.warn(`Unknown unit type ${unitType}, defaulting to simple.`);
@@ -82,7 +83,7 @@
 </script>
 
 <div class="stats-row">
-    Since we started tracking {$selectedPanelStore ? `the ${$selectedPanelStore} Array` : "solar arrays in Deerfield"}...
+    Since we started tracking {($panelName !== "all") ? `the ${$panelName} Array` : "solar arrays in Deerfield"}...
   <div class="row-arrange">
     {#each TOTALS_DERIVATIONS as [conv, unit, unitType, unitSuffix, showDesc]}
       <div class="statistic">
