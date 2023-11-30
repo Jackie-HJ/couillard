@@ -141,7 +141,9 @@
   </div>
   
   {#if selectedPanelUrl}
-    <a href={selectedPanelUrl}>Check out where we are getting the data for {selectedPanelName} from</a>
+    <a href={selectedPanelUrl}>
+      <button>More Details</button>
+    </a>
   {/if}
 </section>
 
