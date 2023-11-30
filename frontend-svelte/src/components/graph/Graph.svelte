@@ -93,7 +93,7 @@
     else {
       selectedPanelDescription = dbData[selectedPanelName].desc;
       selectedPanelUrl = dbData[selectedPanelName].url;
-      selectedPanelImageUrl = dbData[selectedPanelName].image || "https://i0.wp.com/couillardsolarfoundation.org/wp-content/uploads/2021/01/1Merton-2.png?w=1011&ssl=1"
+      selectedPanelImageUrl = dbData[selectedPanelName].image_url || "";
     }
     selectedPanelStore.set(selectedPanelName); // update store value
     showKwhData();
