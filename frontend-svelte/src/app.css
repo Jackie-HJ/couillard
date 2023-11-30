@@ -232,7 +232,3 @@ button {
 #white-outline {
   border-color: #F9FAF8;
 }
-
-.graph-wrapper svg {
-  z-index: -1;
-}
