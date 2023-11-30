@@ -5,7 +5,7 @@
   import Graph from "./components/graph/Graph.svelte"
   import LoadingDialog from "./components/loadingdialog/LoadingDialog.svelte"
 
-  import { totalData, readyToAnimate } from "./stores"
+  import { readyToAnimate } from "./stores"
   import { ANIMATE_OUT_LOADING_TIME, ANIMATE_DURATION } from "./animationTimings"
 
 
@@ -21,7 +21,6 @@
   
   let homeInPlace = false;
   let graphInPlace = false;
-  let footerInPlace = false;
 
   const flyOptions = {
     y: 200,
@@ -44,10 +43,6 @@
   {#if !notReadyYet && homeInPlace}
     <div in:fly={flyOptions} on:introend={() => { graphInPlace = true; }}>
       <Graph />
-    </div>
-  {/if}
-  {#if !notReadyYet && graphInPlace}
-    <div in:fly={flyOptions} on:introend={() => { footerInPlace = true; }}>
       <Footer />
     </div>
   {/if}
