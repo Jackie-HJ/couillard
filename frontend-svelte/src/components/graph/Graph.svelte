@@ -105,14 +105,6 @@
   
 </script>
 
-<section style:display={isLoading ? 'none' : 'block'}>
-  <div class="description">
-    {#if selectedPanelDescription}
-      <p>{selectedPanelDescription}</p>
-    {/if}
-  </div>
-</section>
-
 <section>
   <div class="graph-auxillary-box">
     <div class="unit-changer graph-aux">
@@ -144,10 +136,21 @@
 </section>
 
 <section>
-  <div class="description">
-    {#if selectedPanelImageUrl}
-      <img src={selectedPanelImageUrl} alt={`picture of ${selectedPanelName} solar array`}>
-    {/if}
+  <div class="description-wrapper">
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelDescription}
+          <p>{selectedPanelDescription}</p>
+        {/if}
+      </div>
+    </div>
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelImageUrl}
+          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
+        {/if}
+      </div>
+    </div>
   </div>
 </section>
 
@@ -176,15 +179,33 @@
     margin-left: auto;
   }
 
+  .description-wrapper {
+    display: grid;
+    grid-template-columns: 2fr 1fr;
+  }
+
+  .description-flex {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
   .description {
     text-align: center;
+    container-type: normal;
+    container-name: description-container;
   }
 
   .description p {
     margin: 0px;
-    padding: 5px;
+    padding: 50px;
     font-size: 18px;
     font-weight: bold;
+  }
+
+  .description img {
+    max-width: 33.3vw;
+    padding: 50px;
   }
 
   a {
