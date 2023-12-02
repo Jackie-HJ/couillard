@@ -148,6 +148,8 @@
         <a href={selectedPanelUrl}>
           <button>More Details</button>
         </a>
+      {:else}
+        <button disabled>Select a Panel...</button>
       {/if}
     </div>
   </div>

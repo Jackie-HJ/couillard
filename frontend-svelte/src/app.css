@@ -158,6 +158,10 @@ button {
   color: white;
 }
 
+button[disabled] {
+  opacity: 0.4;
+}
+
 #blue-button {
   border: none;
 }
