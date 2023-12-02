@@ -106,6 +106,25 @@
 </script>
 
 <section>
+  <div class="description-wrapper">
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelDescription}
+          <p>{selectedPanelDescription}</p>
+        {/if}
+      </div>
+    </div>
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelImageUrl}
+          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
+        {/if}
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
   <div class="graph-auxillary-box">
     <div class="unit-changer graph-aux">
       Change Units of Graph:
@@ -133,25 +152,6 @@
     </div>
   </div>
   <div bind:this={container}></div>
-</section>
-
-<section>
-  <div class="description-wrapper">
-    <div class="description-flex">
-      <div class="description">
-        {#if selectedPanelDescription}
-          <p>{selectedPanelDescription}</p>
-        {/if}
-      </div>
-    </div>
-    <div class="description-flex">
-      <div class="description">
-        {#if selectedPanelImageUrl}
-          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
-        {/if}
-      </div>
-    </div>
-  </div>
 </section>
 
 <style>
