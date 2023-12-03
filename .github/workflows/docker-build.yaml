@@ -1,0 +1,30 @@
+name: Docker Build and Run
+
+on:
+  push:
+    branches:
+      - backend  # Change this to your main branch if different
+
+jobs:
+  build-and-run:
+    environment: Couillard
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v2
+
+    - name: Login to GitHub Container Registry
+      uses: docker/login-action@v1
+      with:
+        registry: ghcr.io
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Build and Push Docker Image
+      run: |
+        docker build -t ghcr.io/dssd-madison/couillard:latest .
+        docker push ghcr.io/dssd-madison/couillard:latest
+      working-directory: backend/
+
+    

@@ -1,6 +1,5 @@
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
-from selenium.webdriver.chrome.service import Service
 import requests
 from datetime import datetime, timedelta
 import pytz
@@ -10,15 +9,19 @@ import time, json
 
 # Set up Chrome options
 chrome_options = Options()
-chrome_options.add_argument("--headless")  
 chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-driver_service = Service('./chromedriver-mac-x64/chromedriver')
+chrome_options.add_argument("--disable-extensions")
+chrome_options.add_argument("--headless")
+chrome_options.add_argument("--disable-gpu")
+chrome_options.add_argument("--no-sandbox")
+chrome_options.add_argument("--disable-setuid-sandbox")
+# driver_service = Service('./chromedriver-mac-x64/chromedriver')
 
-driver = webdriver.Chrome(service=driver_service, options=chrome_options)
+driver = webdriver.Chrome(options=chrome_options)
 
 cookie = None
 
-def get_cookie():
+def get_cookie_fronius():
     url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
     driver.get(url)
 
@@ -45,9 +48,8 @@ def get_cookie():
     driver.quit()
 
 
-def get_month_data(month, year):
-    url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=369bf812-62f9-4d4f-b1d4-4ee52ac4e47a&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
-
+def get_month_data(month, year, id):
+    url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=" + id + "&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
         'Accept-Language': 'en-US,en;q=0.9',
@@ -55,7 +57,7 @@ def get_month_data(month, year):
         'Connection': 'keep-alive',
         'Cookie': cookie,
         'Pragma': 'no-cache',
-        'Referer': 'https://www.solarweb.com/PvSystems/PvSystem?pvSystemId=369bf812-62f9-4d4f-b1d4-4ee52ac4e47a',
+        'Referer': 'https://www.solarweb.com/PvSystems/PvSystem?pvSystemId=' + id,
         'Sec-Fetch-Dest': 'empty',
         'Sec-Fetch-Mode': 'cors',
         'Sec-Fetch-Site': 'same-origin',
@@ -70,10 +72,12 @@ def get_month_data(month, year):
     data = None
 
     if response.status_code == 200:
-        data = json.loads(response.text)['settings']['series'][0]['data']
+        data = json.loads(response.text)['settings']['series']
+        if data != []:
+            data = data[0]['data']
+
     else:
         return response.status_code
-    
     retval = {}
     
     for ts, val in data:
@@ -87,4 +91,5 @@ def get_month_data(month, year):
 
 
 if __name__=='__main__':
-    print(get_month_data(1, 2023))
+    get_cookie_fronius()
+    print(get_month_data(1, 2023, '369bf812-62f9-4d4f-b1d4-4ee52ac4e47a'))
