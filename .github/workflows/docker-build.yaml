@@ -3,7 +3,7 @@ name: Docker Build and Run
 on:
   push:
     branches:
-      - backend  # Change this to your main branch if different
+      - main  # Change this to your main branch if different
 
 jobs:
   build-and-run:

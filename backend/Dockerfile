@@ -6,3 +6,4 @@ RUN python3 -m pip install --no-cache-dir -r requirements.txt
 USER seluser
 WORKDIR /home/seluser
 COPY . .
+CMD ["python3", "generate_daily_data.py"]
