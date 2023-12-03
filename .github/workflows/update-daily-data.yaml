@@ -1,8 +1,9 @@
 name: Update Daily Data
 
 on:
-  schedule:
-    - cron: '23 1 * * *' # schedule the job to run once a day on 1:23
+  push:
+    branches:
+      - backend # schedule the job to run once a day on 1:23
 
 jobs:
   update-daily-data:
@@ -27,4 +28,4 @@ jobs:
 
       - name: Run Docker Image
         run: |
-          docker run -v $(pwd)/cred.json:/home/seluser/cred.json ghcr.io/dssd-madison/couillard:latest python3 generate_daily_data.py
+          docker run -v $(pwd)/cred.json:/home/seluser/cred.json ghcr.io/dssd-madison/couillard:latest
