@@ -3,7 +3,7 @@ name: Update Daily Data
 on:
   push:
     branches:
-      - backend # schedule the job to run once a day on 1:23
+      - backend_two # schedule the job to run once a day on 1:23
 
 jobs:
   update-daily-data:
