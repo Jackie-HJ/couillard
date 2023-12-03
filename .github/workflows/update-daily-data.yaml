@@ -1,9 +1,8 @@
 name: Update Daily Data
 
 on:
-  push:
-    branches:
-      - backend_two # schedule the job to run once a day on 1:23
+  schedule:
+    - cron: '23 1 * * *' # schedule the job to run once a day on 1:23
 
 jobs:
   update-daily-data:
