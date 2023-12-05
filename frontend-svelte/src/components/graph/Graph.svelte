@@ -11,6 +11,8 @@
   let selectedPanelImageUrl = "";
   let dbData= {};
 
+  let panelInfoSection;
+
   let selectedPanelName = "all";
   panelNameStore.subscribe(x => {
     selectedPanelName = x;
@@ -102,27 +104,19 @@
   }
 
   panelNameStore.subscribe(updatePanelSelection);
+
+  let wScrollY;
+  let alreadyScrolledDown = false;
+
+  $: {
+    if (wScrollY > 0) {
+      alreadyScrolledDown = true;
+    }
+  };
   
 </script>
 
-<section>
-  <div class="description-wrapper">
-    <div class="description-flex">
-      <div class="description">
-        {#if selectedPanelDescription}
-          <p>{selectedPanelDescription}</p>
-        {/if}
-      </div>
-    </div>
-    <div class="description-flex">
-      <div class="description">
-        {#if selectedPanelImageUrl}
-          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
-        {/if}
-      </div>
-    </div>
-  </div>
-</section>
+<svelte:window bind:scrollY={wScrollY} />
 
 <section>
   <div class="graph-auxillary-box">
@@ -156,7 +150,48 @@
   <div bind:this={container}></div>
 </section>
 
+<section bind:this={panelInfoSection}>
+  <div class="description-wrapper">
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelDescription}
+          <p>{selectedPanelDescription}</p>
+        {/if}
+      </div>
+    </div>
+    <div class="description-flex">
+      <div class="description">
+        {#if selectedPanelImageUrl}
+          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
+        {/if}
+      </div>
+    </div>
+  </div>
+</section>
+
+{#if selectedPanelDescription && !alreadyScrolledDown}
+<div class="panel-info">
+  <button on:click={() => panelInfoSection.scrollIntoView({
+    behavior: 'smooth',
+  })}>Scroll down to learn more...</button>
+</div>
+{/if}
+
 <style>
+
+  .panel-info {
+    position: fixed;
+    bottom: 10px;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    opacity: 50%;
+  }
+  
+  .panel-info button {
+    background-color: gray;
+    font-size: 30pt;
+  }
 
   section {
     color: var(--couillard-blue-color);
