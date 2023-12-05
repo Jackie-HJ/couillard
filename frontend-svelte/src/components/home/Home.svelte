@@ -82,7 +82,12 @@
 </script>
 
 <div class="stats-row">
-    Since we started tracking {($panelName !== "all") ? `the ${$panelName} Array` : "solar arrays in Deerfield"}...
+    Since we started tracking
+    {#if $panelName !== "all"}
+      the {$panelName} Array
+    {:else}
+      solar arrays in Deerfield
+    {/if}...
   <div class="row-arrange">
     {#each TOTALS_DERIVATIONS as [conv, unit, unitType, unitSuffix, showDesc]}
       <div class="statistic">
