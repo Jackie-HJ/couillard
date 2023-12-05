@@ -4,6 +4,7 @@
   import Plotly from 'plotly.js-dist';
 
   import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH } from '../../stores';
+    import { fly } from 'svelte/transition';
 
   let container;
   let selectedPanelDescription = "";
@@ -171,9 +172,13 @@
 
 {#if selectedPanelDescription && !alreadyScrolledDown}
 <div class="panel-info">
-  <button on:click={() => panelInfoSection.scrollIntoView({
-    behavior: 'smooth',
-  })}>Scroll down to learn more...</button>
+  <button
+    on:click={() => panelInfoSection.scrollIntoView({
+      behavior: 'smooth',
+    })}
+    in:fly={{y: 200}}
+    out:fly={{y: 200}}
+  >Scroll down to learn more...</button>
 </div>
 {/if}
 
