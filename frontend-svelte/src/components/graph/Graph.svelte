@@ -13,6 +13,7 @@
   let dbData= {};
 
   let panelInfoSection;
+  let panelInfoImage;
 
   let selectedPanelName = "all";
   panelNameStore.subscribe(x => {
@@ -109,9 +110,16 @@
   let wScrollY;
   let alreadyScrolledDown = false;
 
+
   $: {
     if (wScrollY > 0) {
-      alreadyScrolledDown = true;
+      if (selectedPanelImageUrl != "") {
+        let top = panelInfoImage.getBoundingClientRect().top;
+        let bot = top + panelInfoImage.getBoundingClientRect().height;
+        if (((top + bot) / 2) < window.innerHeight) {
+          alreadyScrolledDown = true;
+        }
+      }
     }
   };
   
@@ -161,7 +169,7 @@
       </div>
     </div>
     <div class="description-flex">
-      <div class="description">
+      <div class="description" bind:this={panelInfoImage}>
         {#if selectedPanelImageUrl}
           <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
         {/if}
