@@ -149,7 +149,7 @@
     <div class="more-details graph-aux">
       {#if selectedPanelUrl}
         <a href={selectedPanelUrl}>
-          <button>More Details</button>
+          <button>View Data Source</button>
         </a>
       {:else}
         <button disabled>Select a Panel...</button>
