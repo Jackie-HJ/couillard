@@ -186,7 +186,7 @@
     })}
     in:fly={{y: 200}}
     out:fly={{y: 200}}
-  >Scroll down to learn more...</button>
+  >More details below...</button>
 </div>
 {/if}
 
@@ -203,7 +203,7 @@
   
   .panel-info button {
     background-color: gray;
-    font-size: 30pt;
+    font-size: 18pt;
   }
 
   section {
