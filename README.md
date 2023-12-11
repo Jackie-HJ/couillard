@@ -10,14 +10,13 @@ The work that needs to be done on this project is kept track of by [the issues o
 
 The 7 arrays do not all use the same inverters, so the data collected is stored in different places. The challenge will be bringing all the data into one place.
 
-Backend: Python script cron job with GitHub Actions, populates db with last days worth of data every day. Also can be run to populate db with all data up to the current date
-
-Database: Firebase Firestore, same schema as [Helios Firestore](https://console.firebase.google.com/project/helios-9d435/firestore)
-
-Auth (if needed): Firebase Auth
+Backend: 
+- Database: Firebase Firestore, same schema as [Helios Firestore](https://console.firebase.google.com/project/helios-9d435/firestore)
+- Python script cron job with GitHub Actions that runs every day. Populates db with last days worth of data, or all past data if a field `needs_update` is set on the array's document (it unsets it after populating).
+- [Admin Spreadsheet](https://docs.google.com/spreadsheets/d/1S9nvMsymOAseaOQ_cnDN_oBePvDAuavbSKx_wkPa8Bk) where admins can add new arrays (create document and set `needs_update`) or just force an update on an array (update array document with `needs_update`). Uses Google Apps Script functions triggered on button clicks.
 
 Frontend: 
 - Query Firestore similar to [how it's done for Helios](https://github.com/DSSD-Madison/Helios/blob/main/frontend/helios-dashboard/src/routes/Dashboard/FetchData.js)
-- Highlights of energy generated to date, in terms of barrels of oil saved or something; Graph of energy produced over time; Graph of energy produced vs. total Deerfield power usage if possible, maybe more.
+- Highlights of energy generated to date; Graph of energy produced over time; images and descriptions
 
 [Link to Firebase console for this project](https://console.firebase.google.com/project/couillard-b61b8/overview)
