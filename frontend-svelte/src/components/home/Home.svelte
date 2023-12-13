@@ -108,7 +108,7 @@
       </div>
     {/each}
   </div>
-  <p class="tiny">*many of our arrays have been operational for much longer than the data reflects, so these numbers are <b>underestimates</b> by a large margin!</p>
+  <p class="tiny">*many of our arrays have been operational for much longer than the data reflects, so these numbers are <b>underestimated</b> by a large margin!</p>
 </div>
 
 <style>
