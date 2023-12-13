@@ -2,7 +2,7 @@ name: Update Daily Data
 
 on:
   schedule:
-    - cron: '23 1 * * *' # schedule the job to run once a day on 1:23
+    - cron: '0 7 * * *' # schedule the job to run once a day on 7am UTC or 1am central
 
 jobs:
   update-daily-data:
