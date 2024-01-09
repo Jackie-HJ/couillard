@@ -21,8 +21,8 @@ driver = webdriver.Chrome(options=chrome_options)
 
 cookie = None
 
-def get_cookie_fronius():
-    url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
+def get_cookie_fronius(url):
+    # url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
     driver.get(url)
 
     # Wait for the page to load and make any necessary interactions
@@ -43,9 +43,12 @@ def get_cookie_fronius():
             break
         except KeyError:
             pass
+    
+    current_url = driver.current_url
 
     # Close the browser
-    driver.quit()
+
+    return current_url
 
 
 def get_month_data(month, year, id):

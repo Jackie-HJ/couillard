@@ -61,11 +61,11 @@ def populate_past_data_auroravision(eids, start_date, current_date, cookie, docu
 
 def populate_past_data(start_date_fronius, start_date_auroravision):
     current_date = datetime.now()
-    get_cookie_fronius()
     documents = db.collection(top_level_collection).stream()
     for document in documents:
         if document.to_dict()["type"] == "fronius":
-            pvSystemId = document.to_dict()["id"]
+            pvSystemId = get_cookie_fronius(document.to_dict()["url"]).split('=')[1]
+            print(pvSystemId)
 
             if document.to_dict().get('update_required', False):
                 populate_past_data_fronius(start_date_fronius_g, current_date, pvSystemId, document)
