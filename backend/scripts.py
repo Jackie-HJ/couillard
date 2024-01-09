@@ -92,4 +92,4 @@ def get_month_data(month, year, id):
 
 if __name__=='__main__':
     get_cookie_fronius()
-    print(get_month_data(1, 2023, '369bf812-62f9-4d4f-b1d4-4ee52ac4e47a'))
+    print(get_month_data(12, 2023, 'b78bc29c-7a93-46d9-905e-51625fffdd77'))
