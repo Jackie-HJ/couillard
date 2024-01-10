@@ -1,29 +1,21 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import requests
 from datetime import datetime, timedelta
 import pytz
+from driver_setup import get_driver
 
 
 import time, json
-
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-chrome_options.add_argument("--disable-extensions")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-setuid-sandbox")
-# driver_service = Service('./chromedriver-mac-x64/chromedriver')
-
-driver = webdriver.Chrome(options=chrome_options)
 
 cookie = None
 
 def get_cookie_fronius(url):
     # url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
-    driver.get(url)
+    driver = get_driver()
+
+    try:
+        driver.get(url)
+    except Exception as e:
+        print(e.message)
 
     # Wait for the page to load and make any necessary interactions
     time.sleep(5)  # Adjust the sleep duration as needed
@@ -46,7 +38,11 @@ def get_cookie_fronius(url):
     
     current_url = driver.current_url
 
-    # Close the browser
+    # Close the page
+    try:
+        driver.quit()
+    except Exception as e:
+        print(e.message)
 
     return current_url
 

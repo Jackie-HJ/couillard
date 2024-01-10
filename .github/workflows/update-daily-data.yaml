@@ -26,5 +26,4 @@ jobs:
           echo '${{ secrets.FIREBASE_CREDS }}' > cred.json
 
       - name: Run Docker Image
-        run: |
-          docker run -v $(pwd)/cred.json:/home/seluser/cred.json ghcr.io/dssd-madison/couillard:latest
+        run: docker compose up

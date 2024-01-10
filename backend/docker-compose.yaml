@@ -1,0 +1,11 @@
+version: '3'
+services:
+  update-arrays:
+    image: ghcr.io/dssd-madison/couillard:latest
+    build: .
+    volumes:
+    - ./cred.json:/home/seluser/cred.json
+    ports:
+      - "4444:4444"
+      - "7900:7900"
+    shm_size: 2gb

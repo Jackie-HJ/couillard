@@ -1,15 +1,9 @@
-from firebase_admin import initialize_app, firestore
-import os
+from firestore import db
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from scripts import get_month_data, get_cookie_fronius
+from fronius import get_month_data, get_cookie_fronius
 from auroravision import get_month_data_auroravision, get_cookie_auroravision
-import pathlib
 
-os.environ["GOOGLE_APPLICATION_CREDENTIALS"] = str(
-    pathlib.Path().resolve()) + "/cred.json"
-app = initialize_app()
-db = firestore.client(app)
 
 start_date_fronius_g = datetime(2020, 6, 1)
 start_date_auroravision_g = datetime(2022, 12, 1)
@@ -63,6 +57,7 @@ def populate_past_data(start_date_fronius, start_date_auroravision):
     current_date = datetime.now()
     documents = db.collection(top_level_collection).stream()
     for document in documents:
+        print(document.to_dict())
         if document.to_dict()["type"] == "fronius":
             pvSystemId = get_cookie_fronius(document.to_dict()["url"]).split('=')[1]
             print(pvSystemId)
@@ -79,6 +74,7 @@ def populate_past_data(start_date_fronius, start_date_auroravision):
                 populate_past_data_auroravision(eids, start_date_auroravision_g, current_date, auroravision_cookie, document)
 
             populate_past_data_auroravision(eids, start_date_auroravision, current_date, auroravision_cookie, document)
+
     
 def generate_auroravision_date(date):
     return str(date.year) + str(date.month).zfill(2) + str(date.day).zfill(2)

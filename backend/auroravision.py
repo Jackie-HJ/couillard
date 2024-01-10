@@ -1,27 +1,19 @@
-from selenium import webdriver
-from selenium.webdriver.chrome.options import Options
 import json, time
 import requests
 from datetime import datetime, timedelta
 import pytz
-
-
-
-# Set up Chrome options
-chrome_options = Options()
-chrome_options.set_capability('goog:loggingPrefs', {'performance': 'ALL'})
-chrome_options.add_argument("--disable-extensions")
-chrome_options.add_argument("--headless")
-chrome_options.add_argument("--disable-gpu")
-chrome_options.add_argument("--no-sandbox")
-chrome_options.add_argument("--disable-setuid-sandbox")
-driver = webdriver.Chrome(options=chrome_options)
+from driver_setup import get_driver
 
 
 def get_cookie_auroravision(eids):
 
+    driver = get_driver()
+
     url = 'https://easyview.auroravision.net/easyview/index.html?entityId=' + eids
-    driver.get(url)
+    try:
+        driver.get(url)
+    except Exception as e:
+        print(e.message)
 
     # Wait for the page to load and make any necessary interactions
     time.sleep(5)  # Adjust the sleep duration as needed
@@ -39,6 +31,11 @@ def get_cookie_auroravision(eids):
             break
         except KeyError:
             pass
+
+    try:
+        driver.quit()
+    except Exception as e:
+        print(e.message)
 
     return cookie + '; _gat=1'
 
