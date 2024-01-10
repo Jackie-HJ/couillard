@@ -2,7 +2,7 @@ from firebase_admin import initialize_app, firestore
 import os
 from datetime import datetime
 from dateutil.relativedelta import relativedelta
-from scripts import get_month_data, get_cookie_fronius, quit_driver
+from scripts import get_month_data, get_cookie_fronius
 from auroravision import get_month_data_auroravision, get_cookie_auroravision
 import pathlib
 
@@ -80,7 +80,6 @@ def populate_past_data(start_date_fronius, start_date_auroravision):
 
             populate_past_data_auroravision(eids, start_date_auroravision, current_date, auroravision_cookie, document)
 
-        quit_driver()
     
 def generate_auroravision_date(date):
     return str(date.year) + str(date.month).zfill(2) + str(date.day).zfill(2)

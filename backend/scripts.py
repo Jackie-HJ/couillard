@@ -21,11 +21,10 @@ driver = webdriver.Chrome(options=chrome_options)
 
 cookie = None
 
-def quit_driver():
-    driver.quit()
-
 def get_cookie_fronius(url):
     # url = 'https://www.solarweb.com/Home/GuestLogOn?pvSystemId=8a1561d2-1393-4cc0-a7d5-939b6346e631'
+    driver = webdriver.Chrome(options=chrome_options)
+
     try:
         driver.get(url)
     except Exception:
@@ -53,6 +52,7 @@ def get_cookie_fronius(url):
     current_url = driver.current_url
 
     # Close the browser
+    driver.quit()
 
     return current_url
 
