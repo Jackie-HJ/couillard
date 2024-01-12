@@ -8,8 +8,14 @@ jobs:
   update-daily-data:
     environment: Couillard
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: backend
 
     steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
       - name: Login to GitHub Container Registry
         uses: docker/login-action@v1
         with:
@@ -18,8 +24,7 @@ jobs:
           password: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Pull Docker Image
-        run: |
-          docker pull ghcr.io/dssd-madison/couillard:latest
+        run: docker compose pull
 
       - name: Create Secrets File
         run: |

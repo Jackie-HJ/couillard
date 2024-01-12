@@ -1,9 +1,11 @@
-name: Docker Build and Run
+name: Docker Build and Push
 
 on:
   push:
     branches:
       - main  # Change this to your main branch if different
+    paths:
+      - 'backend/**'
 
 jobs:
   build-and-run:
@@ -23,8 +25,8 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker build -t ghcr.io/dssd-madison/couillard:latest .
-        docker push ghcr.io/dssd-madison/couillard:latest
+        docker compose up
+        docker compose push
       working-directory: backend/
 
     
