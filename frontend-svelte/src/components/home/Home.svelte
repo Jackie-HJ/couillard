@@ -82,6 +82,9 @@
 </script>
 
 <div class="stats-row">
+  {#if totals == 0}
+  No data has been tracked for this array yet
+  {:else}
     Since we started tracking
     {#if $panelName !== "all"}
       the {$panelName} Array
@@ -109,6 +112,7 @@
     {/each}
   </div>
   <p class="tiny">*many of our arrays have been operational for much longer than the data reflects, so these numbers are <b>underestimated</b> by a large margin!</p>
+  {/if}
 </div>
 
 <style>

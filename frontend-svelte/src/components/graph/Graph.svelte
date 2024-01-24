@@ -3,14 +3,14 @@
   // @ts-ignore
   import Plotly from 'plotly.js-dist';
 
-  import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH } from '../../stores';
+  import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH, totalData } from '../../stores';
     import { fly } from 'svelte/transition';
 
   let container;
   let selectedPanelDescription = "";
   let selectedPanelUrl = "";
   let selectedPanelImageUrl = "";
-  let dbData= {};
+  let dbData= null;
 
   let panelInfoSection;
   let panelInfoImage;
@@ -46,7 +46,7 @@
         fixedrange: true,
       },
       title: `Daily Array Output (${unit})`,
-      dragmode: "pan",
+      dragmode: "pan"
     };
 
     const config = {
@@ -82,11 +82,15 @@
   }
 
   let isLoading = true;
+  let totals = 0;
   onMount(() => {
     dbDataStore.subscribe(async promise => {
       dbData = await promise;
       showKwhData();
       isLoading = false;
+    });
+    totalData.subscribe(async promise => {
+      totals = await promise;
     });
   });
 
@@ -122,12 +126,14 @@
       }
     }
   };
+
+  $: console.log(totals)
   
 </script>
 
 <svelte:window bind:scrollY={wScrollY} />
 
-<section>
+<section class={totals > 0 ? "" : "hidden"}>
   <div class="graph-auxillary-box">
     <div class="unit-changer graph-aux">
       Change Units of Graph:
@@ -161,24 +167,24 @@
 
 <section bind:this={panelInfoSection}>
   <div class="description-wrapper">
+    {#if selectedPanelDescription}
     <div class="description-flex">
       <div class="description">
-        {#if selectedPanelDescription}
           <p>{selectedPanelDescription}</p>
-        {/if}
       </div>
     </div>
+    {/if}
+    {#if selectedPanelImageUrl}
     <div class="description-flex">
       <div class="description" bind:this={panelInfoImage}>
-        {#if selectedPanelImageUrl}
           <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
-        {/if}
       </div>
     </div>
+    {/if}
   </div>
 </section>
 
-{#if selectedPanelDescription && !alreadyScrolledDown}
+{#if selectedPanelDescription && !alreadyScrolledDown && totals > 0}
 <div class="panel-info">
   <button
     on:click={() => panelInfoSection.scrollIntoView({
@@ -238,6 +244,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    min-height: 80vh;
   }
 
   .description {
@@ -261,6 +268,11 @@
   a {
     color: var(--couillard-blue-color);
     text-decoration: underline;
+  }
+
+  .hidden {
+    opacity: 0;
+    height: 0px;
   }
 
 </style>
