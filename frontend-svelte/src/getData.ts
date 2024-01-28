@@ -23,6 +23,7 @@ export interface PanelData {
     readonly y: readonly number[];
     readonly desc: string;
     readonly url: string;
+    readonly old_data: number;
 }
 
 export default async function getData(): Promise<{ [key: string]: PanelData }> {

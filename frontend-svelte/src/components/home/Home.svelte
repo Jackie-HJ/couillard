@@ -85,11 +85,10 @@
   {#if totals == 0}
   No data has been tracked for this array yet
   {:else}
-    Since we started tracking
     {#if $panelName !== "all"}
-      the {$panelName} Array
+      The {$panelName} Array
     {:else}
-      solar arrays in Deerfield
+      Solar arrays in Deerfield
     {/if}...
   <div class="row-arrange">
     {#each TOTALS_DERIVATIONS as [conv, unit, unitType, unitSuffix, showDesc]}
@@ -111,7 +110,7 @@
       </div>
     {/each}
   </div>
-  <p class="tiny">*many of our arrays have been operational for much longer than the data reflects, so these numbers are <b>underestimated</b> by a large margin!</p>
+  <p class="tiny">Totals are calculated from real-time tracking systems as well as historic utility data. The graph below only shows the former.</p>
   {/if}
 </div>
 
