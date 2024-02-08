@@ -31,7 +31,7 @@
     currency: CURRENCY,
   });
   function pickSiPrefix(num, just) {
-    let everything = siNumberFormatter.format(num).replace("K", "k");
+    let everything = siNumberFormatter.format(num).replace("K", "k").replace("B", "G");
     let prefixless = !(/[A-Za-z]$/.test(everything));
     switch (just) {
       case "prefix":
