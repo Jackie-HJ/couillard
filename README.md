@@ -12,11 +12,13 @@ The 7 arrays do not all use the same inverters, so the data collected is stored 
 
 Backend: 
 - Database: Firebase Firestore, same schema as [Helios Firestore](https://console.firebase.google.com/project/helios-9d435/firestore)
+  - [Prod Firebase Project](https://console.firebase.google.com/project/couillard-b61b8/overview)
+  - [Dev Firebase Project](https://console.firebase.google.com/project/csf-dev-22601/overview)
 - Python script cron job with GitHub Actions that runs every day. Populates db with last days worth of data, or all past data if a field `update_required` is set on the array's document (it unsets it after populating).
-- [Admin Spreadsheet](https://docs.google.com/spreadsheets/d/1S9nvMsymOAseaOQ_cnDN_oBePvDAuavbSKx_wkPa8Bk) where admins can add new arrays (create document and set `update_required`) or just force an update on an array (update array document with `update_required`). Uses Google Apps Script functions triggered on button clicks.
+- Admin Spreadsheet where admins can add new arrays (create document and set `update_required`) or just force an update on an array (update array document with `update_required`). Uses Google Apps Script functions triggered on button clicks.
+  - [Prod Spreadsheet](https://docs.google.com/spreadsheets/d/1S9nvMsymOAseaOQ_cnDN_oBePvDAuavbSKx_wkPa8Bk)
+  - [Dev Spreadsheet](https://docs.google.com/spreadsheets/d/14oG8Wn8Y-n9lH_hVYZD7kLDxU1EOii3BOJBTnbnweQc/edit#gid=0)
 
 Frontend: 
 - Query Firestore similar to [how it's done for Helios](https://github.com/DSSD-Madison/Helios/blob/main/frontend/helios-dashboard/src/routes/Dashboard/FetchData.js)
 - Highlights of energy generated to date; Graph of energy produced over time; images and descriptions
-
-[Link to Firebase console for this project](https://console.firebase.google.com/project/couillard-b61b8/overview)
