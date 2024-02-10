@@ -4,14 +4,31 @@ import {
     collection, type DocumentData, type Firestore, getDocs, getFirestore
 } from "firebase/firestore/lite";
 
-const firebaseConfig = {
-    apiKey: "AIzaSyA-YkNpPfhJg9uHoBCnPoKhhxZtGXtrDig",
-    authDomain: "couillard-b61b8.firebaseapp.com",
-    projectId: "couillard-b61b8",
-    storageBucket: "couillard-b61b8.appspot.com",
-    messagingSenderId: "446169152794",
-    appId: "1:446169152794:web:ff8f700af19ef89ff200a3"
-};
+let firebaseConfig;
+
+if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+    firebaseConfig = {
+      apiKey: "AIzaSyC_g1gj55TKZrvnBXmKPyrn81DB4ORchwk",
+      authDomain: "csf-dev-22601.firebaseapp.com",
+      projectId: "csf-dev-22601",
+      storageBucket: "csf-dev-22601.appspot.com",
+      messagingSenderId: "647679887954",
+      appId: "1:647679887954:web:f66d791ee5ef0aa44a2d8b",
+    };
+
+} else {
+    firebaseConfig = {
+      apiKey: "AIzaSyA-YkNpPfhJg9uHoBCnPoKhhxZtGXtrDig",
+      authDomain: "couillard-b61b8.firebaseapp.com",
+      projectId: "couillard-b61b8",
+      storageBucket: "couillard-b61b8.appspot.com",
+      messagingSenderId: "446169152794",
+      appId: "1:446169152794:web:ff8f700af19ef89ff200a3",
+    };
+}
+
+
+
 
 // { <panelName>: [<date-format>, <source-timezone-offset>] }
 const DATE_PATTERNS = {
