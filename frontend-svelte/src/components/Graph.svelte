@@ -3,7 +3,7 @@
   // @ts-ignore
   import Plotly from 'plotly.js-dist';
 
-  import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH, totalData } from '../../stores';
+  import { dbData as dbDataStore, panelName as panelNameStore, LBS_CO2_PER_KWH, DOLLARS_SAVED_PER_KWH, totalData } from '../stores';
     import { fly } from 'svelte/transition';
 
   let container;
@@ -112,6 +112,7 @@
   panelNameStore.subscribe(updatePanelSelection);
 
   let wScrollY;
+  let wInnerWidth;
   let alreadyScrolledDown = false;
 
 
@@ -131,9 +132,12 @@
   
 </script>
 
-<svelte:window bind:scrollY={wScrollY} />
+<svelte:window bind:scrollY={wScrollY} bind:innerWidth={wInnerWidth} />
 
-<section class={totals > 0 ? "" : "hidden"}>
+{#if wInnerWidth < 760}
+<p class="sm-scn-msg">Visit this page on a larger screen to see graphs of daily data collected from each array</p>
+{/if}
+<section class={totals > 0 &&  wInnerWidth > 760 ? "" : "hidden"}>
   <div class="graph-auxillary-box">
     <div class="unit-changer graph-aux">
       Change Units of Graph:
@@ -162,22 +166,22 @@
       {/if}
     </div>
   </div>
-  <div bind:this={container}></div>
+  <div bind:this={container} class="graph-cont"></div>
 </section>
 
 <section bind:this={panelInfoSection}>
   <div class="description-wrapper">
-    {#if selectedPanelDescription}
-    <div class="description-flex">
-      <div class="description">
-          <p>{selectedPanelDescription}</p>
+    {#if selectedPanelImageUrl}
+    <div class="description-item">
+      <div class="description" bind:this={panelInfoImage}>
+          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
       </div>
     </div>
     {/if}
-    {#if selectedPanelImageUrl}
-    <div class="description-flex">
-      <div class="description" bind:this={panelInfoImage}>
-          <img src={selectedPanelImageUrl} alt={`Picture of ${selectedPanelName} Array`}>
+    {#if selectedPanelDescription}
+    <div class="description-item">
+      <div class="description">
+          <p>{selectedPanelDescription}</p>
       </div>
     </div>
     {/if}
@@ -197,6 +201,12 @@
 {/if}
 
 <style>
+
+  .sm-scn-msg {
+    text-align: center;
+    color: var(--couillard-blue-color);
+    padding: 6px;
+  }
 
   .panel-info {
     position: fixed;
@@ -236,15 +246,23 @@
   }
 
   .description-wrapper {
-    display: grid;
-    grid-template-columns: 2fr 1fr;
-  }
-
-  .description-flex {
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 80vh;
+    padding: 10px;
+  }
+
+  .description-item {
+    width: 50%;
+  }
+
+
+  @media(max-width: 760px) {
+    .description-wrapper {
+      flex-direction: column;
+    }
+    .description-item {
+      width: 100%;
+    }
   }
 
   .description {
@@ -255,14 +273,13 @@
 
   .description p {
     margin: 0px;
-    padding: 50px;
+    padding: 10px;
     font-size: 18px;
     font-weight: bold;
   }
 
   .description img {
-    max-width: 33.3vw;
-    padding: 50px;
+    max-width: 100%;
   }
 
   a {
@@ -272,7 +289,6 @@
 
   .hidden {
     opacity: 0;
-    height: 0px;
+    height: 0px !important;
   }
-
 </style>

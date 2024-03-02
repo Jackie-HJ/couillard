@@ -12,7 +12,7 @@ function updatePanelNameStore(event) {
     panelNameStore.set(event.target.value);
 }
 const flyOptions = {
-    x: 200,
+    x: 100,
     duration: ANIMATE_DURATION,
 };
 const flyOptionsFilter = {
@@ -24,7 +24,6 @@ const flyOptionsFilter = {
 <div class="filter-panel-widget">
     {#if !isLoading}
         <div in:fly={flyOptionsFilter} on:introend={() => readyToAnimate.set(true)}>
-            <p>Filter Panels:</p>
             <select on:change={updatePanelNameStore}>
                 <option value="all">All Panels</option>
                 {#each panelNames as panelName}
@@ -36,17 +35,11 @@ const flyOptionsFilter = {
 </div>
 
 <style>
-.filter-panel-widget p {
-    margin: 0px;
-    padding: 5px;
-    font-size: 18px;
-    font-weight: bold;
-}
 
 .filter-panel-widget select {
-    padding: 10px; 
-    font-size: 16px; 
-    cursor: pointer; 
+    padding: 10px;
+    font-size: 16px;
+    cursor: pointer;
     border: none;
     border-radius: 4px; 
     background-color: var(--couillard-orange-color);

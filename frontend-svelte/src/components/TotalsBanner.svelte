@@ -1,7 +1,7 @@
 <script>
   import { onMount } from 'svelte';
-  import { totalData, panelName } from '../../stores';
-  import { TOTALS_DERIVATIONS, FORMATTING_LOCALE, CURRENCY } from '../../conversions';
+  import { totalData, panelName } from '../stores';
+  import { TOTALS_DERIVATIONS, FORMATTING_LOCALE, CURRENCY } from '../conversions';
 
   let totals = 0;
   onMount(() => {
@@ -90,7 +90,7 @@
     {:else}
       Solar arrays in Deerfield
     {/if}...
-  <div class="row-arrange">
+  <div class="stats-wrapper">
     {#each TOTALS_DERIVATIONS as [conv, unit, unitType, unitSuffix, showDesc]}
       <div class="statistic">
           <p class="large">{fmtNum(conv * totals, unitType)}</p>
@@ -136,19 +136,24 @@
   visibility: hidden;
 }
 
-.row-arrange {
+.stats-wrapper {
   display: flex;
-  flex-direction: row;
-  justify-content: space-around;
-  padding: 80px;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  width: 100%;
 }
 
 .statistic {
   text-align: center;
-  border: 10px white;
   color: white;
-  padding: 0px;
   font-weight: bold;
+  width: 33%;
+}
+
+@media(max-width: 760px) {
+  .statistic {
+    width: 100%;
+  }
 }
 
 .large {

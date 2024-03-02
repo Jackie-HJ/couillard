@@ -1,9 +1,9 @@
 <script>
   import Nav from "./components/nav/Nav.svelte"
-  import Home from "./components/home/Home.svelte"
-  import Footer from "./components/footer/Footer.svelte"
-  import Graph from "./components/graph/Graph.svelte"
-  import LoadingDialog from "./components/loadingdialog/LoadingDialog.svelte"
+  import TotalsBanner from "./components/TotalsBanner.svelte"
+  import Footer from "./components/Footer.svelte"
+  import Graph from "./components/Graph.svelte"
+  import LoadingDialog from "./components/LoadingDialog.svelte"
 
   import { readyToAnimate } from "./stores"
   import { ANIMATE_OUT_LOADING_TIME, ANIMATE_DURATION } from "./animationTimings"
@@ -37,7 +37,7 @@
   <Nav />
   {#if !notReadyYet}
     <div in:fly={flyOptionsFirst} on:introend={() => { homeInPlace = true; }}>
-      <Home />
+      <TotalsBanner />
     </div>
   {/if}
   {#if !notReadyYet && homeInPlace}

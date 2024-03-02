@@ -1,6 +1,6 @@
 <script>
     import { onMount } from 'svelte';
-    import { totalData } from '../../stores';
+    import { totalData } from '../stores';
 
     let isLoading = true;
     onMount(() => {
@@ -33,7 +33,7 @@
     }
 
     import { fade } from 'svelte/transition';
-    import { ANIMATE_OUT_LOADING_TIME } from "../../animationTimings"
+    import { ANIMATE_OUT_LOADING_TIME } from "../animationTimings"
 </script>
 
 {#if isLoading}

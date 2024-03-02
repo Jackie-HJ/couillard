@@ -21,9 +21,9 @@ function calcTotal(data: { [key: string]: PanelData }, panelFilter: string) {
             }
         }
         if((panelFilter === "all") || panelFilter == panelName) {
-            total += xy.old_data;
+            total += (+xy.old_data) || 0;
             for (const output of xy.y) {
-                total += +output;
+                total += (+output) || 0;
             }
         }
     }

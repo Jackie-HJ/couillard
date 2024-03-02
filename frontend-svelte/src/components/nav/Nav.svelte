@@ -3,49 +3,45 @@
 
 </script>
 <div class="header">
-    <div class="width-define">
-        <div class="link-row flex-wrapper-header">
-            <div class="logo">
-                <img id="logo" src="logo.jpg" width="80" alt="Logo">
-                <p class="logo">Deerfield Solar Analytics</p>
-            </div>
-            <FilterDropdown />
-        </div>
-    </div>
+    <img src="logo.jpg" alt="Logo">
+    <h1 >Deerfield Solar Analytics</h1>
+    <FilterDropdown />
 </div>
 
 <style> 
 .header {
     background-color: white;
-    display: flex;
-    padding: 6px;
-    padding-left: 10%;
-    padding-right: 10%;
-    flex-direction: column;
-    justify-content: center;
+    width: 100%;
+    padding-bottom: 10px;
 }
 
-.flex-wrapper-header {
-    justify-content: space-between;
-}
 
-.logo {
-    display: flex;
-    align-items: center;
-    padding: 5px;
+h1 {
     font-size: 40px;
-    color: var(--couillard-blue-color); 
-    border-radius: 50%;
+    color: var(--couillard-blue-color);
+    padding: 0;
+    text-align: center;
 }
 
-#logo {
-    margin-right: 10px;
-    border-radius: 0%;
+@media(max-width: 640px) {
+    h1 {
+        font-size: 20px;
+    }
 }
 
-p {
-    font-size: 18px;
-    margin: 0px;
-    font-weight: normal;
+img {
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    width: 80px;
+    height: 80px;
 }
+
+@media(max-width: 760px) {
+    img {
+        width: 40px;
+        height: 40px;
+    }
+}
+
 </style>
