@@ -12,6 +12,9 @@ top_level_collection = 'Solar Arrays'
 
 
 def populate_month(month_data, year, document):
+
+    if not month_data: return
+
     doc_id = document.id
     doc_ref = db.collection(top_level_collection).document(doc_id)
 

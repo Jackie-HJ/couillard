@@ -18,23 +18,30 @@ def get_cookie_fronius(url):
         print(e.message)
 
     # Wait for the page to load and make any necessary interactions
-    time.sleep(5)  # Adjust the sleep duration as needed
+    time.sleep(10)  # Adjust the sleep duration as needed
 
     # Capture network requests from the page
     logs = driver.get_log('performance')
 
     # Filter the network requests to get the relevant data
-    network_requests = [log['message'] for log in logs]
+    network_requests = [log['message'] for log in logs if json.loads(log["message"]).get("message", {}).get("method") == 'Network.requestWillBeSentExtraInfo']
 
     # Process and print the network requests
     for req in network_requests:
         obj = json.loads(req)
-        try:
-            global cookie
-            cookie = obj["message"]["params"]["headers"]["Cookie"]
-            break
-        except KeyError:
-            pass
+        if "GetWidgetChart" in req:            
+            try:
+                new_cookie = ""
+                for cook in obj["message"]["params"]["associatedCookies"]:
+                    new_cookie += cook["cookie"]["name"] + "=" + cook["cookie"]["value"] + "; "
+
+                global cookie
+                cookie = new_cookie
+                break
+            except Exception:
+                continue
+
+    print(cookie)
     
     current_url = driver.current_url
 
@@ -48,6 +55,7 @@ def get_cookie_fronius(url):
 
 
 def get_month_data(month, year, id):
+    global cookie
     url2 = "https://www.solarweb.com/Chart/GetChartNew?pvSystemId=" + id + "&year=" + str(year) + "&month=" + str(month) + "&day=01&interval=month&view=production"
     headers = {
         'Accept': 'application/json, text/javascript, */*; q=0.01',
@@ -74,9 +82,9 @@ def get_month_data(month, year, id):
         data = json.loads(response.text)['settings']['series']
         if data != []:
             data = data[0]['data']
-
     else:
-        return response.status_code
+        print(f'Failed to get data from Fronius. Status code: {response.status_code}')
+        return None
     retval = {}
     
     for ts, val in data:
