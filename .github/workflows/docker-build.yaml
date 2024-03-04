@@ -6,6 +6,7 @@ on:
       - main  # Change this to your main branch if different
     paths:
       - 'backend/**'
+      - '.github/workflows/docker-build.yaml'
 
 jobs:
   build-and-run:
@@ -25,7 +26,7 @@ jobs:
 
     - name: Build and Push Docker Image
       run: |
-        docker compose up
+        docker compose build
         docker compose push
       working-directory: backend/
 
