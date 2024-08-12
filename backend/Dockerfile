@@ -1,9 +1,10 @@
 FROM selenium/standalone-chrome
 USER root
-RUN apt-get update && apt-get install -y python3-full python3 python3-pip pipx
+RUN apt-get update && apt-get install -y python3-full python3 python3-pip
 COPY requirements.txt .
-RUN sudo pipx ensurepath
-RUN sudo pipx install --no-cache-dir -r requirements.txt
+RUN python3 -m venv venv
+RUN source venv/bin/activate
+RUN python3 -m pip install --no-cache-dir -r requirements.txt
 USER seluser
 WORKDIR /home/seluser
 COPY . .
