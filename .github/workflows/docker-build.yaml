@@ -13,6 +13,7 @@ jobs:
   build-and-run:
     environment: Couillard
     runs-on: ubuntu-latest
+    permissions: write-all
 
     steps:
     - name: Checkout Repository
