@@ -1,7 +1,7 @@
 version: '3'
 services:
   update-arrays:
-    image: ghcr.io/jackblake-zkq/couillard:latest
+    image: ghcr.io/jackie-hj/couillard:latest
     build: .
     volumes:
     - ./cred.json:/home/seluser/cred.json
