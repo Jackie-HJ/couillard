@@ -1,10 +1,10 @@
 FROM selenium/standalone-chrome
 USER root
-RUN apt-get update && apt-get install -y python3-full python3 python3-pip
+RUN apt-get update && apt-get install -y python3-full pipx
+RUN pipx ensurepath
+RUN pipx install mkdocs
 COPY requirements.txt .
-RUN python3 -m venv venv
-RUN . venv/bin/activate
-RUN python3 -m pip install --no-cache-dir -r requirements.txt
+RUN cat requrements.txt | xargs pipx inject mkdocs
 USER seluser
 WORKDIR /home/seluser
 COPY . .
